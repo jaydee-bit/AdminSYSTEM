@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoDrive Admin Loan Plan</title>
+    <link rel="stylesheet" href="../dist/output.css" />
+    <script
+      src="https://kit.fontawesome.com/414b0df42d.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .font-audiowide {
+        font-family: "Audiowide", sans-serif;
+      }
+      .sidebar {
+        transition: transform 0.3s ease-in-out;
+      }
+      .sidebar-open {
+        transform: translateX(0);
+      }
+      .sidebar-closed {
+        transform: translateX(-100%);
+      }
+    </style>
+  </head>
+
+  <body class="flex flex-col min-h-screen overflow-x-hidden bg-gray-100">
+    <!-- SIDEBAR -->
+    <aside
+      id="sidebar"
+      class="fixed top-0 left-0 z-50 w-64 h-full bg-blue-700 shadow-2xl sidebar sidebar-closed"
+    >
+      <div class="flex flex-col h-full">
+        <div
+          class="flex items-center justify-between p-4 border-b border-blue-600"
+        >
+          <h2 class="text-xl font-bold text-white font-audiowide">
+            Admin Dashboard
+          </h2>
+          <button id="closeSidebar" class="text-white hover:text-gray-200">
+            ✕
+          </button>
+        </div>
+
+        <nav class="flex-1 p-4 overflow-y-auto">
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="index.html"
+                class="flex items-center p-3 text-white rounded-lg hover:bg-blue-600"
+                ><i class="mr-3 fas fa-home"></i> Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="Adminloanslist.html"
+                class="flex items-center p-3 text-white rounded-lg hover:bg-blue-600"
+                ><i class="mr-3 fas fa-hand-holding-usd"></i> Loans</a
+              >
+            </li>
+            <li>
+              <a
+                href="Adminpayment.html"
+                class="flex items-center p-3 text-white rounded-lg hover:bg-blue-600"
+                ><i class="mr-3 fas fa-credit-card"></i> Payments</a
+              >
+            </li>
+            <li>
+              <a
+                href="Adminborrower.html"
+                class="flex items-center p-3 text-white rounded-lg hover:bg-blue-600"
+                ><i class="mr-3 fas fa-users"></i> Borrowers</a
+              >
+            </li>
+            <li>
+              <a
+                href="AdminLoanplan.html"
+                class="flex items-center p-3 text-lg font-bold text-yellow-200 rounded-lg hover:bg-blue-600"
+                ><i class="mr-3 fas fa-file-invoice-dollar"></i> Loan Plans</a
+              >
+            </li>
+            <li>
+              <a
+                href="Adminusers.html"
+                class="flex items-center p-3 text-white rounded-lg hover:bg-blue-600"
+                ><i class="mr-3 fas fa-user-cog"></i> Users</a
+              >
+            </li>
+          </ul>
+        </nav>
+
+        <div class="p-4 border-t border-blue-600">
+          <a
+            href="adminlogin.html"
+            class="flex items-center p-3 text-white rounded-lg hover:bg-blue-600"
+            ><i class="mr-3 fas fa-sign-out-alt"></i> Logout</a
+          >
+        </div>
+      </div>
+    </aside>
+
+    <div id="overlay" class="fixed inset-0 z-40 hidden bg-opacity-40"></div>
+
+    <!-- HEADER -->
+    <header
+      class="w-full px-4 py-3 text-white bg-blue-600 shadow-lg font-audiowide"
+    >
+      <div class="flex items-center">
+        <button id="hamburger" class="text-2xl text-white hover:text-gray-300">
+          ☰
+        </button>
+        <img
+          src="/images/logo.png"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+          class="h-8 ml-3"
+        />
+        <span class="hidden ml-2 text-xl font-bold">ECODRIVE</span>
+        <i
+          class="ml-auto text-2xl cursor-pointer fas fa-user-circle hover:text-gray-300"
+        ></i>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="px-6 py-6">
+      <h1 class="mb-4 text-2xl font-bold text-gray-700">Loan Plans</h1>
+
+      <!-- FLEX CONTAINER FOR FILTER AND TABLE -->
+      <div class="flex flex-col gap-4 lg:flex-row">
+        <!-- LEFT SIDE FILTER -->
+        <div class="w-full p-6 bg-white shadow lg:w-72 rounded-xl">
+          <div class="mb-4">
+            <label class="block mb-2 text-sm font-semibold text-gray-700"
+              >Plan(months)</label
+            >
+            <input
+              type="number"
+              value=""
+              class="w-full px-3 py-2 text-black border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 focus:outline-none"
+            />
+          </div>
+
+          <div class="mb-4">
+            <label class="block mb-2 text-sm font-semibold text-gray-700"
+              >Interest</label
+            >
+            <div class="relative">
+              <input
+                type="number"
+                value=""
+                class="w-full px-3 py-2 pr-10 text-black border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 focus:outline-none"
+              />
+              <span
+                class="absolute text-gray-500 -translate-y-1/2 right-3 top-1/2"
+                >%</span
+              >
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <label class="block mb-2 text-sm font-semibold text-gray-700"
+              >Monthly Overdue Penalty</label
+            >
+            <div class="relative">
+              <input
+                type="number"
+                value=""
+                class="w-full px-3 py-2 pr-10 text-black border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 focus:outline-none"
+              />
+              <span
+                class="absolute text-gray-500 -translate-y-1/2 right-3 top-1/2"
+                >%</span
+              >
+            </div>
+          </div>
+
+          <button
+            id="saveLoanPlanButton"
+            class="w-full py-3 font-semibold text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700"
+          >
+            Save
+          </button>
+        </div>
+
+        <!-- RIGHT SIDE TABLE -->
+        <div class="flex-1 p-4 bg-white shadow rounded-xl">
+          <div
+            class="flex flex-col gap-4 mb-4 md:flex-row md:items-center md:justify-between"
+          >
+            <div class="flex items-center gap-2 text-gray-700">
+              <span class="font-semibold">Show</span>
+              <select class="px-2 py-1 border border-gray-500 rounded">
+                <option>1</option>
+                <option>5</option>
+                <option>10</option>
+              </select>
+              <span class="font-semibold">entries</span>
+            </div>
+
+            <div class="relative flex items-center gap-2">
+              <label class="font-semibold text-gray-700">Search:</label>
+              <div class="relative">
+                <input
+                  type="text"
+                  class="w-40 py-1 pl-3 pr-8 text-black border rounded focus:ring focus:ring-blue-300"
+                  placeholder="Search..."
+                />
+                <i
+                  class="absolute text-gray-500 -translate-y-1/2 fas fa-search right-3 top-1/2"
+                ></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-visible">
+            <table class="min-w-full border border-gray-300">
+              <thead class="bg-gray-100">
+                <tr class="text-black">
+                  <th class="px-3 py-2 text-left border">Plan(Months)</th>
+                  <th class="px-3 py-2 text-left border">Interest(%)</th>
+                  <th class="px-3 py-2 text-left border">Monthly Overdue(%)</th>
+                  <th class="px-3 py-2 text-left border">Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr class="font-semibold text-black">
+                  <td class="px-3 py-3 font-bold align-top border">15</td>
+                  <td class="px-3 py-3 font-bold align-top border">5</td>
+                  <td class="px-3 py-3 font-bold align-top border">2</td>
+                  <td class="px-3 py-3 font-bold align-top border">
+                    <div class="relative">
+                      <button
+                        class="w-full p-2 font-bold text-white bg-blue-500 rounded-lg action-btn hover:bg-blue-600"
+                      >
+                        Action ▼
+                      </button>
+
+                      <div
+                        class="absolute left-0 z-50 hidden w-32 mt-1 overflow-hidden bg-white border border-gray-300 rounded-lg shadow-xl action-menu"
+                      >
+                        <button
+                          class="w-full px-4 py-2 font-semibold text-left text-white transition bg-orange-400 hover:bg-orange-500 edit-btn"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          class="w-full px-4 py-2 font-semibold text-left text-white transition bg-red-600 hover:bg-red-700 delete-btn"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="mt-3 text-sm font-semibold text-gray-600">
+            Showing 1 to 1 of 1 entries
+          </p>
+
+          <div class="flex justify-end mt-3">
+            <div class="flex items-center gap-1">
+              <button
+                class="px-3 py-1 text-black bg-gray-100 border rounded hover:bg-gray-300"
+              >
+                Previous
+              </button>
+              <button class="px-3 py-1 text-white bg-blue-600 border rounded">
+                1
+              </button>
+              <button
+                class="px-3 py-1 text-black bg-gray-100 border rounded hover:bg-gray-300"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- SUCCESS MODAL -->
+    <div
+      id="success-modal"
+      class="fixed inset-0 z-[200] items-center justify-center hidden p-4 bg-opacity-50"
+    >
+      <div
+        class="w-full max-w-sm p-8 text-center bg-white shadow-2xl rounded-2xl"
+      >
+        <div class="flex justify-center mb-6">
+          <div
+            id="success-icon-container"
+            class="flex items-center justify-center w-24 h-24 bg-green-100 rounded-full"
+          ></div>
+        </div>
+        <h2 id="success-title" class="mb-2 text-2xl font-bold text-gray-800">
+          Success!
+        </h2>
+        <p id="success-message" class="mb-8 text-lg text-gray-600">
+          The action was completed successfully.
+        </p>
+        <button
+          id="success-ok-button"
+          class="w-full py-3 font-semibold text-white bg-green-500 rounded-lg shadow-md hover:bg-green-600"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+
+    <!-- EDIT MODAL -->
+    <div
+      id="edit-modal"
+      class="fixed inset-0 z-[200] items-center justify-center hidden p-4 bg-opacity-50"
+    >
+      <div
+        class="w-full max-w-md overflow-hidden bg-white rounded-lg shadow-2xl"
+      >
+        <div
+          class="flex items-center justify-between px-6 py-4 text-white bg-orange-500"
+        >
+          <h2 class="text-xl font-bold">Edit Payment List</h2>
+          <button id="close-edit-modal" class="text-2xl hover:text-gray-200">
+            ✕
+          </button>
+        </div>
+
+        <div class="px-6 py-6 space-y-4">
+          <div>
+            <label class="block mb-2 text-sm font-semibold text-gray-700"
+              >Plan (months)</label
+            >
+            <input
+              type="number"
+              id="edit-plan"
+              value="12"
+              class="w-full px-3 py-2 text-black bg-gray-100 border border-gray-300 rounded focus:ring focus:ring-orange-300 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label class="block mb-2 text-sm font-semibold text-gray-700"
+              >Interest(%)</label
+            >
+            <input
+              type="number"
+              id="edit-interest"
+              value="2"
+              class="w-full px-3 py-2 text-black bg-gray-100 border border-gray-300 rounded focus:ring focus:ring-orange-300 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label class="block mb-2 text-sm font-semibold text-gray-700"
+              >Monthly Overdue Penalty(%)</label
+            >
+            <input
+              type="number"
+              id="edit-penalty"
+              value="2"
+              class="w-full px-3 py-2 text-black bg-gray-100 border border-gray-300 rounded focus:ring focus:ring-orange-300 focus:outline-none"
+            />
+          </div>
+        </div>
+
+        <div class="flex justify-center gap-3 px-6 pb-6">
+          <button
+            id="save-edit"
+            class="px-8 py-2 font-semibold text-white bg-blue-600 rounded hover:bg-blue-700"
+          >
+            Save
+          </button>
+          <button
+            id="cancel-edit"
+            class="px-8 py-2 font-semibold text-white bg-gray-500 rounded hover:bg-gray-600"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELETE CONFIRMATION MODAL -->
+    <div
+      id="delete-modal"
+      class="fixed inset-0 z-[200] items-center justify-center hidden p-4 bg-opacity-50"
+    >
+      <div
+        class="w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-2xl"
+      >
+        <div class="px-6 py-4 text-center text-white bg-red-600">
+          <h2 class="text-xl font-bold">Delete List</h2>
+        </div>
+
+        <div class="px-6 py-8 text-center">
+          <p class="mb-6 text-lg font-semibold text-gray-800">
+            Are you sure you want to delete?
+          </p>
+
+          <div class="flex justify-center gap-3">
+            <button
+              id="confirm-delete"
+              class="px-8 py-2 font-semibold text-white bg-blue-600 rounded hover:bg-blue-700"
+            >
+              Yes
+            </button>
+            <button
+              id="cancel-delete"
+              class="px-8 py-2 font-semibold text-white bg-blue-600 rounded hover:bg-blue-700"
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* SIDEBAR */
+      const hamburger = document.getElementById("hamburger");
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+      const closeSidebar = document.getElementById("closeSidebar");
+
+      function openSidebar() {
+        sidebar.classList.remove("sidebar-closed");
+        sidebar.classList.add("sidebar-open");
+        overlay.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeSidebarFunc() {
+        sidebar.classList.add("sidebar-closed");
+        sidebar.classList.remove("sidebar-open");
+        overlay.classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+
+      hamburger.addEventListener("click", openSidebar);
+      closeSidebar.addEventListener("click", closeSidebarFunc);
+      overlay.addEventListener("click", closeSidebarFunc);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeSidebarFunc();
+      });
+
+      /* SUCCESS MODAL */
+      const successModal = document.getElementById("success-modal");
+      const successOkButton = document.getElementById("success-ok-button");
+      const successTitle = document.getElementById("success-title");
+      const successMessage = document.getElementById("success-message");
+      const successIconContainer = document.getElementById(
+        "success-icon-container"
+      );
+
+      const showSuccessModal = (title, msg, iconHtml) => {
+        successTitle.textContent = title;
+        successMessage.textContent = msg;
+        successIconContainer.innerHTML = iconHtml;
+        successModal.classList.remove("hidden");
+        successModal.classList.add("flex");
+      };
+
+      successOkButton.addEventListener("click", () => {
+        successModal.classList.add("hidden");
+        successModal.classList.remove("flex");
+      });
+
+      /* SAVE LOAN PLAN BUTTON */
+      const saveLoanPlanButton = document.getElementById("saveLoanPlanButton");
+      saveLoanPlanButton.addEventListener("click", () => {
+        showSuccessModal(
+          "Loan Plan Saved!",
+          "The loan plan has been successfully saved.",
+          `<svg class="w-16 h-16 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`
+        );
+      });
+
+      /* ACTION DROPDOWN */
+      const actionBtns = document.querySelectorAll(".action-btn");
+      const actionMenus = document.querySelectorAll(".action-menu");
+
+      actionBtns.forEach((btn) => {
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          const menu = this.nextElementSibling;
+
+          // Close all other menus
+          actionMenus.forEach((other) => {
+            if (other !== menu) other.classList.add("hidden");
+          });
+
+          // Toggle current menu
+          menu.classList.toggle("hidden");
+        });
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", () => {
+        actionMenus.forEach((menu) => menu.classList.add("hidden"));
+      });
+
+      /* EDIT MODAL */
+      const editModal = document.getElementById("edit-modal");
+      const closeEditModal = document.getElementById("close-edit-modal");
+      const cancelEdit = document.getElementById("cancel-edit");
+      const saveEdit = document.getElementById("save-edit");
+      const editBtns = document.querySelectorAll(".edit-btn");
+
+      editBtns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          editModal.classList.remove("hidden");
+          editModal.classList.add("flex");
+          actionMenus.forEach((menu) => menu.classList.add("hidden"));
+        });
+      });
+
+      closeEditModal.addEventListener("click", () => {
+        editModal.classList.add("hidden");
+        editModal.classList.remove("flex");
+      });
+
+      cancelEdit.addEventListener("click", () => {
+        editModal.classList.add("hidden");
+        editModal.classList.remove("flex");
+      });
+
+      saveEdit.addEventListener("click", () => {
+        editModal.classList.add("hidden");
+        editModal.classList.remove("flex");
+        showSuccessModal(
+          "Loan Plan Updated!",
+          "The loan plan has been successfully updated.",
+          `<svg class="w-16 h-16 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`
+        );
+      });
+
+      /* DELETE MODAL */
+      const deleteModal = document.getElementById("delete-modal");
+      const cancelDelete = document.getElementById("cancel-delete");
+      const confirmDelete = document.getElementById("confirm-delete");
+      const deleteBtns = document.querySelectorAll(".delete-btn");
+
+      deleteBtns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          deleteModal.classList.remove("hidden");
+          deleteModal.classList.add("flex");
+          actionMenus.forEach((menu) => menu.classList.add("hidden"));
+        });
+      });
+
+      cancelDelete.addEventListener("click", () => {
+        deleteModal.classList.add("hidden");
+        deleteModal.classList.remove("flex");
+      });
+
+      confirmDelete.addEventListener("click", () => {
+        deleteModal.classList.add("hidden");
+        deleteModal.classList.remove("flex");
+        showSuccessModal(
+          "Loan Plan Deleted!",
+          "The loan plan has been successfully deleted.",
+          `<svg class="w-16 h-16 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>`
+        );
+      });
+    </script>
+  </body>
+</html>
