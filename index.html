@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoDrive Admin Dashboard</title>
+    <link rel="stylesheet" href="../dist/output.css" />
+    <script
+      src="https://kit.fontawesome.com/414b0df42d.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .font-audiowide {
+        font-family: "Audiowide", sans-serif;
+      }
+      .sidebar {
+        transition: transform 0.3s ease-in-out;
+      }
+      .sidebar-open {
+        transform: translateX(0);
+      }
+      .sidebar-closed {
+        transform: translateX(-100%);
+      }
+    </style>
+  </head>
+
+  <body class="flex flex-col min-h-screen overflow-x-hidden bg-gray-100">
+    <!-- Sidebar -->
+    <aside
+      id="sidebar"
+      class="fixed top-0 left-0 z-50 w-64 h-full bg-blue-700 shadow-2xl sidebar sidebar-closed"
+    >
+      <div class="flex flex-col h-full">
+        <!-- Sidebar Header -->
+        <div
+          class="flex items-center justify-between p-4 border-b border-blue-600"
+        >
+          <h2 class="text-xl font-bold text-white font-audiowide">
+            Admin Dashboard
+          </h2>
+          <button id="closeSidebar" class="text-white hover:text-gray-200">
+            ✕
+          </button>
+        </div>
+
+        <!-- Sidebar Links -->
+        <nav class="flex-1 p-4 overflow-y-auto">
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="index.html"
+                class="flex items-center p-3 text-lg font-bold text-yellow-200 transition rounded-lg hover:bg-blue-600"
+              >
+                <i class="mr-3 fas fa-home"></i> Home
+              </a>
+            </li>
+            <li>
+              <a
+                href="Adminloanslist.html"
+                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
+              >
+                <i class="mr-3 fas fa-hand-holding-usd"></i> Loans
+              </a>
+            </li>
+            <li>
+              <a
+                href="Adminpayment.html"
+                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
+              >
+                <i class="mr-3 fas fa-credit-card"></i> Payments
+              </a>
+            </li>
+            <li>
+              <a
+                href="Adminborrower.html"
+                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
+              >
+                <i class="mr-3 fas fa-users"></i> Borrowers
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
+              >
+                <i class="mr-3 fas fa-file-invoice-dollar"></i> Loan Plans
+              </a>
+            </li>
+            <li>
+              <a
+                href="Adminusers.html"
+                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
+              >
+                <i class="mr-3 fas fa-user-cog"></i> Users
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Logout -->
+        <div class="p-4 border-t border-blue-600">
+          <a
+            href="adminlogin.html"
+            class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
+          >
+            <i class="mr-3 fas fa-sign-out-alt"></i> Logout
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Screen Overlay -->
+    <div
+      id="overlay"
+      class="fixed inset-0 z-40 hidden bg-black bg-opacity-40"
+      style="display: none"
+    ></div>
+
+    <!-- Header -->
+    <header
+      class="w-full px-4 py-3 text-white bg-blue-600 shadow-lg font-audiowide"
+    >
+      <div class="flex items-center">
+        <!-- Hamburger -->
+        <button id="hamburger" class="text-2xl text-white hover:text-gray-300">
+          ☰
+        </button>
+
+        <!-- Logo -->
+        <img
+          src="/images/logo.png"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+          class="h-8 ml-3"
+        />
+        <span class="hidden ml-2 text-xl font-bold">ECODRIVE</span>
+
+        <!-- Profile Icon (Right Corner) -->
+        <i
+          class="ml-auto text-2xl cursor-pointer fas fa-user-circle hover:text-gray-300"
+        ></i>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="px-6 py-6">
+      <h1 class="text-2xl font-bold text-gray-700">Dashboard</h1>
+
+      <!-- Dashboard Cards -->
+      <div class="grid max-w-6xl gap-6 mt-6 sm:grid-cols-2 md:grid-cols-3">
+        <!-- Card: Active Loans -->
+        <div
+          class="flex flex-col justify-between p-5 bg-white border-l-4 border-blue-500 shadow rounded-xl"
+        >
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-bold text-blue-600">Active Loans</h3>
+            <i class="text-2xl text-blue-500 fas fa-book"></i>
+          </div>
+          <p class="mt-4 text-3xl font-bold text-gray-700">0</p>
+          <a
+            href="Adminloanslist.html"
+            class="flex items-center justify-end mt-4 text-sm font-semibold text-blue-600 hover:underline"
+          >
+            View Loan List <i class="ml-2 fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- Card: Payments Today -->
+        <div
+          class="flex flex-col justify-between p-5 bg-white border-l-4 border-green-500 shadow rounded-xl"
+        >
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-bold text-green-600">Payments Today</h3>
+            <i class="text-2xl text-green-500 fas fa-money-bill-wave"></i>
+          </div>
+          <p class="mt-4 text-3xl font-bold text-gray-700">₱ 0.00</p>
+          <a
+            href="Adminpayment.html"
+            class="flex items-center justify-end mt-4 text-sm font-semibold text-green-600 hover:underline"
+          >
+            View Payment List <i class="ml-2 fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- Card: Borrowers -->
+        <div
+          class="flex flex-col justify-between p-5 bg-white border-l-4 shadow rounded-xl border-cyan-400"
+        >
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-bold text-cyan-500">Borrowers</h3>
+            <i class="text-2xl fas fa-users text-cyan-400"></i>
+          </div>
+          <p class="mt-4 text-3xl font-bold text-gray-700">0</p>
+          <a
+            href="Adminborrower.html"
+            class="flex items-center justify-end mt-4 text-sm font-semibold text-cyan-500 hover:underline"
+          >
+            View Borrower List <i class="ml-2 fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Sidebar Logic -->
+    <script>
+      const hamburger = document.getElementById("hamburger");
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+      const closeSidebar = document.getElementById("closeSidebar");
+
+      function openSidebar() {
+        sidebar.classList.remove("sidebar-closed");
+        sidebar.classList.add("sidebar-open");
+        overlay.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeSidebarFunc() {
+        sidebar.classList.add("sidebar-closed");
+        sidebar.classList.remove("sidebar-open");
+        overlay.classList.add("hidden");
+        document.body.style.overflow = "";
+      }
+
+      hamburger.addEventListener("click", openSidebar);
+      closeSidebar.addEventListener("click", closeSidebarFunc);
+      overlay.addEventListener("click", closeSidebarFunc);
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeSidebarFunc();
+      });
+    </script>
+  </body>
+</html>
