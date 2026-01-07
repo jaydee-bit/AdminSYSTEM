@@ -3,236 +3,150 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EcoDrive Admin Dashboard</title>
-    <link rel="stylesheet" href="../dist/output.css" />
-    <script
-      src="https://kit.fontawesome.com/414b0df42d.js"
-      crossorigin="anonymous"
-    ></script>
+    <title>EcoDrive Admin - Login</title>
+    <link rel="stylesheet" href="/dist/output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap"
       rel="stylesheet"
     />
     <style>
       .font-audiowide {
-        font-family: "Audiowide", sans-serif;
+        font-family: "Audiowide", cursive;
       }
-      .sidebar {
-        transition: transform 0.3s ease-in-out;
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
-      .sidebar-open {
-        transform: translateX(0);
-      }
-      .sidebar-closed {
-        transform: translateX(-100%);
+      .animate-fadeIn {
+        animation: fadeIn 0.5s ease;
       }
     </style>
   </head>
-
-  <body class="flex flex-col min-h-screen overflow-x-hidden bg-gray-100">
-    <!-- Sidebar -->
-    <aside
-      id="sidebar"
-      class="fixed top-0 left-0 z-50 w-64 h-full bg-blue-700 shadow-2xl sidebar sidebar-closed"
-    >
-      <div class="flex flex-col h-full">
-        <!-- Sidebar Header -->
+  <body class="min-h-screen overflow-x-hidden bg-white">
+    <div class="flex flex-col min-h-screen lg:flex-row">
+      <!-- Left Section -->
+      <div
+        class="relative flex-col items-center justify-center hidden p-12 overflow-hidden text-white lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 to-blue-700"
+      >
         <div
-          class="flex items-center justify-between p-4 border-b border-blue-600"
-        >
-          <h2 class="text-xl font-bold text-white font-audiowide">
-            Admin Dashboard
-          </h2>
-          <button id="closeSidebar" class="text-white hover:text-gray-200">
-            ✕
-          </button>
-        </div>
+          class="absolute w-20 h-20 border-2 rounded-full top-10 left-10 border-white/20"
+        ></div>
+        <div
+          class="absolute w-16 h-16 border-2 rounded-full top-20 right-20 border-yellow-400/30"
+        ></div>
+        <div
+          class="absolute w-12 h-12 rounded-full bottom-20 left-20 bg-yellow-400/20"
+        ></div>
+        <div
+          class="absolute w-8 h-8 rounded-full bottom-40 right-32 bg-white/10"
+        ></div>
 
-        <!-- Sidebar Links -->
-        <nav class="flex-1 p-4 overflow-y-auto">
-          <ul class="space-y-2">
-            <li>
-              <a
-                href="index.html"
-                class="flex items-center p-3 text-lg font-bold text-yellow-200 transition rounded-lg hover:bg-blue-600"
-              >
-                <i class="mr-3 fas fa-home"></i> Home
-              </a>
-            </li>
-            <li>
-              <a
-                href="Adminloanslist.html"
-                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
-              >
-                <i class="mr-3 fas fa-hand-holding-usd"></i> Loans
-              </a>
-            </li>
-            <li>
-              <a
-                href="Adminpayment.html"
-                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
-              >
-                <i class="mr-3 fas fa-credit-card"></i> Payments
-              </a>
-            </li>
-            <li>
-              <a
-                href="Adminborrower.html"
-                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
-              >
-                <i class="mr-3 fas fa-users"></i> Borrowers
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
-              >
-                <i class="mr-3 fas fa-file-invoice-dollar"></i> Loan Plans
-              </a>
-            </li>
-            <li>
-              <a
-                href="Adminusers.html"
-                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
-              >
-                <i class="mr-3 fas fa-user-cog"></i> Users
-              </a>
-            </li>
-          </ul>
-        </nav>
-
-        <!-- Logout -->
-        <div class="p-4 border-t border-blue-600">
-          <a
-            href="adminlogin.html"
-            class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
-          >
-            <i class="mr-3 fas fa-sign-out-alt"></i> Logout
-          </a>
+        <div class="z-10 max-w-lg text-center">
+          <img
+            src="/images/logo.png"
+            alt="EcoDrive Logo"
+            class="mx-auto mb-8 xl:w-5xl"
+          />
+          <h1 class="mb-6 font-bold xl:text-5xl lg:text-3xl">
+            Build Your Future With EcoDrive
+          </h1>
+          <p class="text-xl opacity-90">
+            Join the electric mobility revolution with cutting-edge solutions
+            and sustainable transportation technology.
+          </p>
         </div>
       </div>
-    </aside>
 
-    <!-- Screen Overlay -->
-    <div
-      id="overlay"
-      class="fixed inset-0 z-40 hidden bg-black bg-opacity-40"
-      style="display: none"
-    ></div>
-
-    <!-- Header -->
-    <header
-      class="w-full px-4 py-3 text-white bg-blue-600 shadow-lg font-audiowide"
-    >
-      <div class="flex items-center">
-        <!-- Hamburger -->
-        <button id="hamburger" class="text-2xl text-white hover:text-gray-300">
-          ☰
-        </button>
-
-        <!-- Logo -->
-        <img
-          src="/images/logo.png"
-          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-          class="h-8 ml-3"
-        />
-        <span class="hidden ml-2 text-xl font-bold">ECODRIVE</span>
-
-        <!-- Profile Icon (Right Corner) -->
-        <i
-          class="ml-auto text-2xl cursor-pointer fas fa-user-circle hover:text-gray-300"
-        ></i>
-      </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="px-6 py-6">
-      <h1 class="text-2xl font-bold text-gray-700">Dashboard</h1>
-
-      <!-- Dashboard Cards -->
-      <div class="grid max-w-6xl gap-6 mt-6 sm:grid-cols-2 md:grid-cols-3">
-        <!-- Card: Active Loans -->
+      <!-- Right Section -->
+      <div class="flex flex-col w-full lg:w-1/2">
+        <!-- Mobile Header -->
         <div
-          class="flex flex-col justify-between p-5 bg-white border-l-4 border-blue-500 shadow rounded-xl"
+          class="flex flex-col items-center justify-center text-center text-white h-25 bg-gradient-to-br from-blue-600 to-blue-700 lg:hidden"
         >
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-bold text-blue-600">Active Loans</h3>
-            <i class="text-2xl text-blue-500 fas fa-book"></i>
-          </div>
-          <p class="mt-4 text-3xl font-bold text-gray-700">0</p>
-          <a
-            href="Adminloanslist.html"
-            class="flex items-center justify-end mt-4 text-sm font-semibold text-blue-600 hover:underline"
-          >
-            View Loan List <i class="ml-2 fas fa-arrow-right"></i>
-          </a>
+          <img src="/images/logo.png" alt="EcoDrive" class="mb-2 w-65" />
+        </div>
+        <div
+          class="mt-4 font-bold leading-tight text-center text-black lg:hidden"
+        >
+          <h1 class="mb-2 text-3xl">Welcome Admin!</h1>
+          <p class="text-md opacity-80">Login to your account</p>
         </div>
 
-        <!-- Card: Payments Today -->
+        <!-- Form -->
         <div
-          class="flex flex-col justify-between p-5 bg-white border-l-4 border-green-500 shadow rounded-xl"
+          class="flex items-center justify-center flex-1 p-8 bg-white lg:p-12 lg:bg-gray-50"
         >
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-bold text-green-600">Payments Today</h3>
-            <i class="text-2xl text-green-500 fas fa-money-bill-wave"></i>
-          </div>
-          <p class="mt-4 text-3xl font-bold text-gray-700">₱ 0.00</p>
-          <a
-            href="Adminpayment.html"
-            class="flex items-center justify-end mt-4 text-sm font-semibold text-green-600 hover:underline"
-          >
-            View Payment List <i class="ml-2 fas fa-arrow-right"></i>
-          </a>
-        </div>
+          <div class="w-full max-w-md animate-fadeIn">
+            <div class="hidden mb-8 lg:block">
+              <h2 class="mb-2 text-3xl font-bold text-gray-900">
+                Welcome Admin!
+              </h2>
+              <p class="text-gray-600">Please login to your account.</p>
+            </div>
 
-        <!-- Card: Borrowers -->
-        <div
-          class="flex flex-col justify-between p-5 bg-white border-l-4 shadow rounded-xl border-cyan-400"
-        >
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-bold text-cyan-500">Borrowers</h3>
-            <i class="text-2xl fas fa-users text-cyan-400"></i>
+            <!-- Login Form -->
+            <form onsubmit="handleLogin(event)">
+              <div class="mb-6">
+                <label
+                  for="username"
+                  class="block mb-2 text-sm font-semibold text-gray-700"
+                  >Username</label
+                >
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="Enter your username"
+                  class="w-full px-4 py-3.5 border-2 text-black border-gray-300 rounded-xl text-base focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all duration-300"
+                />
+              </div>
+
+              <div class="mb-4">
+                <label
+                  for="password"
+                  class="block mb-2 text-sm font-semibold text-gray-700"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  minlength="8"
+                  maxlength="20"
+                  required
+                  class="text-black w-full px-4 py-3.5 border-2 border-gray-300 rounded-xl text-base focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all duration-300"
+                />
+              </div>
+
+              <div class="mb-6 text-right">
+                <a
+                  href="forgotpass.html"
+                  class="text-sm font-medium text-blue-600 transition-colors hover:text-blue-700 hover:underline"
+                >
+                  Forgot Password?</a
+                >
+              </div>
+
+              <button
+                type="submit"
+                class="w-full px-4 py-3.5 bg-blue-600 hover:bg-blue-700 cursor-pointer text-white rounded-xl text-base font-semibold shadow-md hover:shadow-lg active:scale-[0.98] transition-all duration-200"
+                onclick="window.location.href='Homepage.html'"
+              >
+                Login
+              </button>
+            </form>
           </div>
-          <p class="mt-4 text-3xl font-bold text-gray-700">0</p>
-          <a
-            href="Adminborrower.html"
-            class="flex items-center justify-end mt-4 text-sm font-semibold text-cyan-500 hover:underline"
-          >
-            View Borrower List <i class="ml-2 fas fa-arrow-right"></i>
-          </a>
         </div>
       </div>
-    </main>
-
-    <!-- Sidebar Logic -->
-    <script>
-      const hamburger = document.getElementById("hamburger");
-      const sidebar = document.getElementById("sidebar");
-      const overlay = document.getElementById("overlay");
-      const closeSidebar = document.getElementById("closeSidebar");
-
-      function openSidebar() {
-        sidebar.classList.remove("sidebar-closed");
-        sidebar.classList.add("sidebar-open");
-        overlay.classList.remove("hidden");
-        document.body.style.overflow = "hidden";
-      }
-
-      function closeSidebarFunc() {
-        sidebar.classList.add("sidebar-closed");
-        sidebar.classList.remove("sidebar-open");
-        overlay.classList.add("hidden");
-        document.body.style.overflow = "";
-      }
-
-      hamburger.addEventListener("click", openSidebar);
-      closeSidebar.addEventListener("click", closeSidebarFunc);
-      overlay.addEventListener("click", closeSidebarFunc);
-
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeSidebarFunc();
-      });
-    </script>
+    </div>
   </body>
 </html>
