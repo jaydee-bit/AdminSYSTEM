@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoDrive Admin - Active Loans</title>
+    <link rel="stylesheet" href="./dist/output.css" />
+    <script
+      src="https://kit.fontawesome.com/414b0df42d.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .font-audiowide {
+        font-family: "Audiowide", sans-serif;
+      }
+      .sidebar {
+        transition: transform 0.3s ease-in-out;
+      }
+      .sidebar-closed {
+        transform: translateX(-100%);
+      }
+      .filter-tab.active {
+        background-color: #2563eb;
+        color: white;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+
+  <body class="flex flex-col min-h-screen overflow-x-hidden bg-gray-100">
+    <!-- Sidebar -->
+    <aside
+      id="sidebar"
+      class="fixed top-0 left-0 z-50 w-64 h-full bg-blue-700 shadow-2xl sidebar sidebar-closed"
+    >
+      <div class="flex flex-col h-full">
+        <div
+          class="flex items-center justify-between p-4 border-b border-blue-600"
+        >
+          <h2 class="text-xl font-bold text-white font-audiowide">
+            Admin Dashboard
+          </h2>
+          <button id="closeSidebar" class="text-white hover:text-gray-200">
+            ✕
+          </button>
+        </div>
+        <nav class="flex-1 p-4 overflow-y-auto">
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="Homepage.html"
+                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
+                ><i class="mr-3 fas fa-home"></i> Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="Adminloanslist.html"
+                class="flex items-center p-3 text-lg font-bold text-yellow-200 transition rounded-lg hover:bg-blue-600"
+                ><i class="mr-3 fas fa-hand-holding-usd"></i> Loans</a
+              >
+            </li>
+            <li>
+              <a
+                href="Adminpayment.html"
+                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
+                ><i class="mr-3 fas fa-credit-card"></i> Payments</a
+              >
+            </li>
+            <li>
+              <a
+                href="Adminborrower.html"
+                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
+                ><i class="mr-3 fas fa-users"></i> Borrowers</a
+              >
+            </li>
+            <li>
+              <a
+                href="AdminLoanplan.html"
+                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
+                ><i class="mr-3 fas fa-file-invoice-dollar"></i> Loan Plans</a
+              >
+            </li>
+            <li>
+              <a
+                href="Adminusers.html"
+                class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
+                ><i class="mr-3 fas fa-user-cog"></i> Users</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <div class="p-4 border-t border-blue-600">
+          <a
+            href="index.html"
+            class="flex items-center p-3 text-white transition rounded-lg hover:bg-blue-600"
+            ><i class="mr-3 fas fa-sign-out-alt"></i> Logout</a
+          >
+        </div>
+      </div>
+    </aside>
+
+    <div id="overlay" class="fixed inset-0 z-40 hidden bg-opacity-40"></div>
+
+    <!-- Header -->
+    <header
+      class="w-full px-4 py-3 text-white bg-blue-600 shadow-lg font-audiowide"
+    >
+      <div class="flex items-center">
+        <button id="hamburger" class="text-2xl text-white hover:text-gray-300">
+          ☰
+        </button>
+        <img
+          src="images/logo.png"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+          class="h-8 ml-3"
+        />
+        <span class="hidden ml-2 text-xl font-bold">ECODRIVE</span>
+        <i
+          class="ml-auto text-2xl cursor-pointer fas fa-user-circle hover:text-gray-300"
+        ></i>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="px-4 py-6 sm:px-6">
+      <div
+        class="flex flex-col items-start justify-between gap-4 mb-6 sm:flex-row sm:items-center"
+      >
+        <h1 class="text-2xl font-bold text-gray-700">Active Loans</h1>
+        <div class="flex flex-wrap gap-3 text-sm">
+          <div
+            class="flex items-center gap-2 px-3 py-1 bg-white rounded-lg shadow-sm"
+          >
+            <i class="text-blue-600 fas fa-calendar-alt"></i>
+            <span class="font-semibold text-gray-700">This Month:</span>
+            <span class="font-bold text-blue-600">₱125,000</span>
+          </div>
+          <div
+            class="flex items-center gap-2 px-3 py-1 bg-white rounded-lg shadow-sm"
+          >
+            <i class="text-green-600 fas fa-coins"></i>
+            <span class="font-semibold text-gray-700">Collections:</span>
+            <span class="font-bold text-green-600">₱89,500</span>
+          </div>
+        </div>
+      </div>
+
+      <button
+        id="openLoanModalButton"
+        class="flex items-center gap-2 px-5 py-2 mb-4 font-bold text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600"
+      >
+        <i class="text-xl fas fa-plus-circle"></i> Create new Loan Application
+      </button>
+
+      <div class="p-4 bg-white shadow rounded-xl">
+        <!-- Filter Tabs -->
+        <div class="mb-4 overflow-x-auto">
+          <div class="flex gap-2 pb-2 min-w-max">
+            <a
+              href="Adminloanslist.html"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+              ><i class="mr-1 fas fa-list"></i> All Loans</a
+            >
+            <a
+              href="AdminloansActive.html"
+              class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+              ><i class="mr-1 fas fa-check-circle"></i> Active</a
+            >
+            <a
+              href="AdminloansOverdue.html"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+              ><i class="mr-1 fas fa-exclamation-triangle"></i> Overdue
+              <span
+                class="ml-1 px-2 py-0.5 text-xs font-bold text-white bg-red-500 rounded-full"
+                >2</span
+              ></a
+            >
+            <a
+              href="AdminloansCompleted.html"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+              ><i class="mr-1 fas fa-flag-checkered"></i> Completed</a
+            >
+            <a
+              href="AdminMonthlyReleases.html"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+              ><i class="mr-1 fas fa-calendar-check"></i> Monthly Releases</a
+            >
+            <a
+              href="AdminMonthlyCollections.html"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+              ><i class="mr-1 fas fa-hand-holding-usd"></i> Monthly
+              Collections</a
+            >
+          </div>
+        </div>
+
+        <!-- Table Controls -->
+        <div
+          class="flex flex-col gap-4 mb-4 md:flex-row md:items-center md:justify-between"
+        >
+          <div class="flex items-center gap-2 text-gray-700">
+            <span class="font-semibold">Show</span>
+            <select class="px-2 py-1 border border-gray-500 rounded">
+              <option>1</option>
+              <option>5</option>
+              <option>10</option>
+            </select>
+            <span class="font-semibold">entries</span>
+          </div>
+          <div class="relative flex items-center gap-2">
+            <label class="font-semibold text-gray-700">Search:</label>
+            <div class="relative">
+              <input
+                type="text"
+                class="w-40 py-1 pl-3 pr-3 text-black border rounded focus:ring focus:ring-blue-300"
+                placeholder="Search..."
+              />
+              <i
+                class="absolute text-gray-500 -translate-y-1/2 fas fa-search right-3 top-1/2"
+              ></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loans Table -->
+        <div class="overflow-x-auto">
+          <table class="min-w-full border border-gray-300">
+            <thead class="bg-gray-100">
+              <tr class="text-black">
+                <th class="px-3 py-2 text-left border">#</th>
+                <th class="px-3 py-2 text-left border">Borrower</th>
+                <th class="px-3 py-2 text-left border">Loan Details</th>
+                <th class="px-3 py-2 text-left border">Payment Details</th>
+                <th class="px-3 py-2 text-left border">Unit</th>
+                <th class="px-3 py-2 text-left border">Status</th>
+                <th class="px-3 py-2 text-left border">Action</th>
+              </tr>
+            </thead>
+            <tbody id="loanTableBody"></tbody>
+          </table>
+        </div>
+
+        <p class="mt-3 text-sm font-semibold text-gray-600">
+          Showing 1 to 1 of 1 entries
+        </p>
+        <div class="flex justify-end mt-3">
+          <div class="flex items-center gap-1">
+            <button
+              class="px-3 py-1 text-black bg-gray-100 border rounded hover:bg-gray-300"
+            >
+              Previous
+            </button>
+            <button class="px-3 py-1 text-white bg-blue-600 border rounded">
+              1
+            </button>
+            <button
+              class="px-3 py-1 text-black bg-gray-100 border rounded hover:bg-gray-300"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modals -->
+    <div
+      id="paymentScheduleModal"
+      class="hidden fixed inset-0 flex items-center justify-center z-[999] p-4 bg-opacity-40"
+    >
+      <div
+        class="bg-white w-[95%] max-w-lg rounded-lg shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+      >
+        <div
+          class="flex items-center justify-between flex-shrink-0 px-4 py-3 text-white bg-blue-600 sm:px-6"
+        >
+          <h2 class="text-xl font-bold">Amount to pay</h2>
+          <button class="text-2xl close-modal hover:text-gray-200">✕</button>
+        </div>
+        <div class="flex-grow overflow-y-auto">
+          <table class="min-w-full text-sm border-collapse">
+            <thead
+              class="sticky top-0 text-gray-700 bg-gray-100 border-b border-gray-300"
+            >
+              <tr>
+                <th
+                  class="px-3 py-2 text-left font-semibold w-[100px] min-w-[100px]"
+                >
+                  Status
+                </th>
+                <th class="px-3 py-2 font-semibold text-left">Due Date</th>
+                <th class="px-3 py-2 font-semibold text-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody id="paymentScheduleBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="loanModal"
+      class="hidden fixed inset-0 z-[999] flex items-center justify-center bg-opacity-40"
+    >
+      <div
+        class="bg-white w-[90%] max-w-3xl rounded-lg shadow-xl overflow-hidden"
+      >
+        <div
+          class="flex items-center justify-between px-6 py-4 text-white bg-blue-600"
+        >
+          <h2 class="text-xl font-bold">Loan Application</h2>
+          <button class="text-2xl close-modal hover:text-gray-200">✕</button>
+        </div>
+        <div class="px-6 py-6 space-y-6">
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+              <label class="font-semibold text-gray-700">Borrower</label
+              ><select class="w-full px-3 py-2 mt-1 text-black border rounded">
+                <option>Please select</option>
+              </select>
+            </div>
+            <div>
+              <label class="font-semibold text-gray-700">Loan Plan</label
+              ><select class="w-full px-3 py-2 mt-1 text-black border rounded">
+                <option>Please select an option</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+              <label class="font-semibold text-gray-700">Loan Amount</label
+              ><input
+                type="number"
+                class="w-full px-3 py-2 mt-1 text-black border rounded"
+              />
+            </div>
+            <div>
+              <label class="font-semibold text-gray-700">Model Unit</label
+              ><select class="w-full px-3 py-2 mt-1 text-black border rounded">
+                <option>Select Unit</option>
+                <option>Blitz 1200</option>
+                <option>Fun 350R II</option>
+                <option>Econo 800MP II</option>
+                <option>Econo 800MP</option>
+                <option>E-cargo 800J</option>
+                <option>Candy 800</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex justify-center">
+            <button
+              id="openCalcModal"
+              class="px-6 py-2 font-semibold text-white bg-blue-600 rounded hover:bg-blue-700"
+            >
+              Calculate Amount
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="calcModal"
+      class="hidden fixed inset-0 flex items-center justify-center z-[1000] p-4 bg-opacity-40"
+    >
+      <div class="w-full max-w-sm p-6 bg-white shadow-2xl rounded-xl">
+        <div
+          class="flex items-center justify-between px-0 py-3 mb-4 text-gray-800 border-b border-gray-200"
+        >
+          <h2 class="text-xl font-bold">Calculation Details</h2>
+          <button
+            class="text-2xl text-gray-500 close-modal hover:text-gray-700"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between py-2 border-b">
+            <span class="font-medium text-gray-600">Total Payable Amount</span
+            ><span class="text-lg font-bold text-gray-900">₱ 45,000.00</span>
+          </div>
+          <div class="flex items-center justify-between py-2 border-b">
+            <span class="font-medium text-gray-600">Monthly Payable Amount</span
+            ><span class="text-lg font-bold text-gray-900">₱ 3,000.00</span>
+          </div>
+          <div class="flex items-center justify-between py-2">
+            <span class="font-medium text-red-500">Penalty Amount</span
+            ><span class="text-lg font-bold text-red-500">₱ 30.00</span>
+          </div>
+        </div>
+        <div class="flex justify-end mt-8 space-x-3">
+          <button
+            class="px-5 py-2 font-medium text-gray-700 transition bg-gray-200 rounded-lg shadow-sm close-modal hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+            id="applyLoan"
+            class="px-5 py-2 font-medium text-white transition bg-green-600 rounded-lg shadow-md hover:bg-green-700"
+          >
+            Apply Loan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="successModal"
+      class="hidden fixed inset-0 flex items-center justify-center z-[1100] p-4 bg-opacity-40"
+    >
+      <div
+        class="w-full max-w-sm p-8 text-center bg-white shadow-2xl rounded-2xl"
+      >
+        <div class="flex justify-center mb-6">
+          <div
+            id="successIcon"
+            class="flex items-center justify-center w-24 h-24 bg-green-100 rounded-full"
+          ></div>
+        </div>
+        <h2 id="successTitle" class="mb-2 text-2xl font-bold text-gray-800">
+          Success!
+        </h2>
+        <p id="successMessage" class="mb-8 text-lg text-gray-600">
+          The action was completed successfully.
+        </p>
+        <button
+          class="w-full px-6 py-3 font-semibold text-white transition bg-green-500 rounded-lg shadow-md close-modal hover:bg-green-600"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="actionMenu"
+      class="absolute hidden bg-white shadow-xl rounded-lg w-48 z-[1000] p-2 border border-gray-100"
+    >
+      <button
+        data-action="sms"
+        class="flex items-center w-full px-3 py-2 mb-2 text-sm font-semibold text-white bg-blue-600 rounded-md action-btn hover:bg-blue-700"
+      >
+        <i class="mr-2 fas fa-sms"></i>Send SMS
+      </button>
+      <button
+        data-action="overdue"
+        class="flex items-center w-full px-3 py-2 mt-1 text-sm font-semibold text-red-600 rounded-md action-btn hover:bg-red-50"
+      >
+        <i class="mr-2 fas fa-exclamation-triangle"></i>Mark Overdue
+      </button>
+      <button
+        data-action="reminder"
+        class="flex items-center w-full px-3 py-2 text-sm font-semibold text-green-600 rounded-md action-btn hover:bg-green-50"
+      >
+        <i class="mr-2 fas fa-bell"></i>Send Reminder
+      </button>
+    </div>
+
+    <script>
+      // Only active loans
+      const loans = [
+        {
+          id: 1,
+          name: "Dela Cruz, Juan D.",
+          contact: "09946854330",
+          address: "San Luis Pampanga",
+          ref: "245864",
+          plan: "15 months",
+          amount: "₱45,000.00",
+          down: "₱6,000.00",
+          total: "₱51,000.00",
+          monthly: "₱3,000.00",
+          overdue: "₱60.00",
+          released: "April 6, 2025",
+          nextPay: "Oct 6, 2025",
+          payAmount: "₱3,000.00",
+          penalty: "₱0.00",
+          payable: "₱3,000.00",
+          unit: "Blitz 1200",
+          status: "active",
+          statusClass: "blue",
+        },
+      ];
+
+      const paymentSchedule = [
+        { status: "paid", date: "May 6, 2025", amount: "₱ 3,000.00" },
+        { status: "paid", date: "Jun 6, 2025", amount: "₱ 3,000.00" },
+        {
+          status: "pending",
+          date: "Oct 6, 2025",
+          amount: "₱ 3,000.00",
+          ref: "245864",
+        },
+      ];
+
+      function renderLoans() {
+        const tbody = document.getElementById("loanTableBody");
+        tbody.innerHTML = loans
+          .map(
+            (loan) => `
+        <tr class="font-semibold text-black">
+          <td class="px-3 py-3 align-top border">${loan.id}</td>
+          <td class="px-3 py-3 space-y-5 align-top border">
+            <h1>Name: <span class="font-bold">${loan.name}</span></h1>
+            <h1>Contact: <span class="font-bold">${loan.contact}</span></h1>
+            <h1>Address: <span class="font-bold">${loan.address}</span></h1>
+          </td>
+          <td class="px-3 py-3 space-y-5 align-top border">
+            <h1>Reference no: <span class="font-bold">${loan.ref}</span></h1>
+            <h1>Loan Plan: <span class="font-bold">${loan.plan}</span></h1>
+            <h1>Amount: <span class="font-bold">${loan.amount}</span></h1>
+            <h1>Down Payment: <span class="font-bold">${loan.down}</span></h1>
+            <h1>Total Amount: <span class="font-bold">${loan.total}</span></h1>
+            <h1>Monthly Amount: <span class="font-bold">${
+              loan.monthly
+            }</span></h1>
+            <h1>Overdue Amount: <span class="font-bold">${
+              loan.overdue
+            }</span></h1>
+            <h1>Date Released: <span class="font-bold">${
+              loan.released
+            }</span></h1>
+          </td>
+          <td class="px-3 py-3 space-y-5 align-top border">
+            <h1>Next Payment Date: <span class="font-bold">${
+              loan.nextPay
+            }</span></h1>
+            <h1>Amount: <span class="font-bold">${loan.payAmount}</span></h1>
+            <h1>Penalty: <span class="font-bold">${loan.penalty}</span></h1>
+            <h1>Payable Amount: <span class="font-bold">${
+              loan.payable
+            }</span></h1>
+          </td>
+          <td class="px-3 py-3 font-bold align-top border">${loan.unit}</td>
+          <td class="px-3 py-3 align-top border">
+            <span class="px-3 py-1 text-sm font-bold text-${
+              loan.statusClass
+            }-700 bg-${loan.statusClass}-100 rounded-full">${
+              loan.status.charAt(0).toUpperCase() + loan.status.slice(1)
+            }</span>
+          </td>
+          <td class="px-3 py-3 align-top border">
+            <button class="w-full p-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600 view-schedule">View Payment Schedule</button>
+          </td>
+        </tr>
+      `
+          )
+          .join("");
+
+        document.querySelectorAll(".view-schedule").forEach((btn) => {
+          btn.onclick = () =>
+            showModal("paymentScheduleModal", renderPaymentSchedule);
+        });
+      }
+
+      function renderPaymentSchedule() {
+        document.getElementById("paymentScheduleBody").innerHTML =
+          paymentSchedule
+            .map(
+              (p) => `
+        <tr class="text-gray-800 border-b hover:bg-${
+          p.status === "paid" ? "green" : "gray"
+        }-50">
+          <td class="px-3 py-2">
+            <div class="flex items-center gap-2">
+              <i class="${
+                p.status === "paid"
+                  ? "text-green-500 fas fa-check-circle"
+                  : "text-gray-500 far fa-circle"
+              }"></i>
+              <i class="${
+                p.status === "paid"
+                  ? "text-gray-400"
+                  : "text-blue-500 cursor-pointer send-trigger"
+              } fas fa-paper-plane" ${
+                p.ref
+                  ? `data-ref="${p.ref}" data-date="${p.date}" data-amount="${p.amount}"`
+                  : ""
+              } ></i>
+            </div>
+          </td>
+          <td class="px-3 py-2 font-medium">${p.date}</td>
+          <td class="px-3 py-2 font-bold text-right">${p.amount}</td>
+        </tr>
+      `
+            )
+            .join("");
+
+        document.querySelectorAll(".send-trigger").forEach((el) => {
+          el.onclick = (e) => {
+            e.stopPropagation();
+            const rect = el.getBoundingClientRect();
+            const menu = document.getElementById("actionMenu");
+            menu.style.top = `${rect.top + window.scrollY}px`;
+            menu.style.left = `${rect.left + rect.width + 10}px`;
+            menu.classList.remove("hidden");
+            menu.dataset.ref = el.dataset.ref;
+            menu.dataset.date = el.dataset.date;
+          };
+        });
+      }
+
+      function showModal(id, callback) {
+        document.getElementById(id).classList.remove("hidden");
+        if (callback) callback();
+      }
+
+      function hideModal(id) {
+        document.getElementById(id).classList.add("hidden");
+      }
+
+      function showSuccess(title, msg, icon, closeLoanModal) {
+        document.getElementById("successTitle").textContent = title;
+        document.getElementById("successMessage").textContent = msg;
+        document.getElementById("successIcon").innerHTML = icon;
+        showModal("successModal");
+        if (closeLoanModal) {
+          document.querySelector("#successModal .close-modal").onclick = () => {
+            hideModal("successModal");
+            hideModal("loanModal");
+          };
+        }
+      }
+
+      document.getElementById("hamburger").onclick = () => {
+        document.getElementById("sidebar").classList.remove("sidebar-closed");
+        document.getElementById("overlay").classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      };
+
+      const closeSidebar = () => {
+        document.getElementById("sidebar").classList.add("sidebar-closed");
+        document.getElementById("overlay").classList.add("hidden");
+        document.body.style.overflow = "";
+      };
+
+      document.getElementById("closeSidebar").onclick = closeSidebar;
+      document.getElementById("overlay").onclick = closeSidebar;
+      document.getElementById("openLoanModalButton").onclick = () =>
+        showModal("loanModal");
+      document.getElementById("openCalcModal").onclick = (e) => {
+        e.preventDefault();
+        showModal("calcModal");
+      };
+      document.getElementById("applyLoan").onclick = () => {
+        hideModal("calcModal");
+        showSuccess(
+          "Loan Approved!",
+          "The loan application was successfully processed and approved.",
+          '<svg class="w-16 h-16 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+          true
+        );
+      };
+
+      document.querySelectorAll(".close-modal").forEach((btn) => {
+        btn.onclick = (e) => {
+          e.preventDefault();
+          const modal = btn.closest('[id$="Modal"]');
+          if (modal) {
+            modal.classList.add("hidden");
+          }
+          document.getElementById("actionMenu").classList.add("hidden");
+        };
+      });
+
+      document.getElementById("loanModal").onclick = (e) => {
+        if (e.target.id === "loanModal")
+          document.getElementById("loanModal").classList.add("hidden");
+      };
+      document.getElementById("calcModal").onclick = (e) => {
+        if (e.target.id === "calcModal")
+          document.getElementById("calcModal").classList.add("hidden");
+      };
+      document.getElementById("successModal").onclick = (e) => {
+        if (e.target.id === "successModal")
+          document.getElementById("successModal").classList.add("hidden");
+      };
+      document.getElementById("paymentScheduleModal").onclick = (e) => {
+        if (e.target.id === "paymentScheduleModal") {
+          document
+            .getElementById("paymentScheduleModal")
+            .classList.add("hidden");
+          document.getElementById("actionMenu").classList.add("hidden");
+        }
+      };
+
+      document.querySelectorAll(".action-btn").forEach((btn) => {
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          const action = btn.dataset.action;
+          const menu = document.getElementById("actionMenu");
+          const icons = {
+            sms: '<i class="w-16 h-16 text-blue-600 fas fa-sms"></i>',
+            overdue:
+              '<i class="text-red-600 fa-4x fas fa-exclamation-triangle"></i>',
+            reminder: '<i class="text-green-600 fa-4x fas fa-bell"></i>',
+          };
+          const titles = {
+            sms: "SMS Sent",
+            overdue: "Overdue Notice Sent",
+            reminder: "Reminder Sent",
+          };
+          const msgs = {
+            sms: "SMS message successfully sent to the borrower's contact number.",
+            overdue: `Overdue notice sent for loan #${menu.dataset.ref}. The borrower has been notified.`,
+            reminder: `Reminder message successfully sent for the payment due on ${menu.dataset.date}.`,
+          };
+          menu.classList.add("hidden");
+          showSuccess(titles[action], msgs[action], icons[action]);
+        };
+      });
+
+      document.onclick = (e) => {
+        if (
+          !document.getElementById("actionMenu").contains(e.target) &&
+          !e.target.classList.contains("send-trigger")
+        ) {
+          document.getElementById("actionMenu").classList.add("hidden");
+        }
+      };
+
+      document.onkeydown = (e) => {
+        if (e.key === "Escape") {
+          document.getElementById("loanModal").classList.add("hidden");
+          document.getElementById("calcModal").classList.add("hidden");
+          document.getElementById("successModal").classList.add("hidden");
+          document
+            .getElementById("paymentScheduleModal")
+            .classList.add("hidden");
+          document.getElementById("actionMenu").classList.add("hidden");
+          closeSidebar();
+        }
+      };
+
+      renderLoans();
+    </script>
+  </body>
+</html>

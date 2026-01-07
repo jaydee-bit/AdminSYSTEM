@@ -14,7 +14,6 @@
       rel="stylesheet"
     />
     <style>
-      /* Using the user's original style block */
       .font-audiowide {
         font-family: "Audiowide", sans-serif;
       }
@@ -26,6 +25,14 @@
       }
       .sidebar-closed {
         transform: translateX(-100%);
+      }
+      .filter-tab {
+        transition: all 0.2s ease;
+      }
+      .filter-tab.active {
+        background-color: #2563eb;
+        color: white;
+        font-weight: 600;
       }
     </style>
   </head>
@@ -138,8 +145,29 @@
       </div>
     </header>
 
-    <main class="px-6 py-6">
-      <h1 class="mb-4 text-2xl font-bold text-gray-700">Loan List</h1>
+    <main class="px-4 py-6 sm:px-6">
+      <div
+        class="flex flex-col items-start justify-between gap-4 mb-6 sm:flex-row sm:items-center"
+      >
+        <h1 class="text-2xl font-bold text-gray-700">Loan List</h1>
+
+        <div class="flex flex-wrap gap-3 text-sm">
+          <div
+            class="flex items-center gap-2 px-3 py-1 bg-white rounded-lg shadow-sm"
+          >
+            <i class="text-blue-600 fas fa-calendar-alt"></i>
+            <span class="font-semibold text-gray-700">This Month:</span>
+            <span class="font-bold text-blue-600">₱125,000</span>
+          </div>
+          <div
+            class="flex items-center gap-2 px-3 py-1 bg-white rounded-lg shadow-sm"
+          >
+            <i class="text-green-600 fas fa-coins"></i>
+            <span class="font-semibold text-gray-700">Collections:</span>
+            <span class="font-bold text-green-600">₱89,500</span>
+          </div>
+        </div>
+      </div>
 
       <button
         id="openLoanModalButton"
@@ -150,6 +178,57 @@
       </button>
 
       <div class="p-4 bg-white shadow rounded-xl">
+        <div class="mb-4 overflow-x-auto">
+          <div class="flex gap-2 pb-2 min-w-max">
+            <button
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg filter-tab active hover:bg-gray-200"
+              data-filter="all"
+            >
+              <i class="mr-1 fas fa-list"></i>
+              All Loans
+            </button>
+            <button
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg filter-tab hover:bg-gray-200"
+              data-filter="active"
+            >
+              <i class="mr-1 fas fa-check-circle"></i>
+              Active
+            </button>
+            <button
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg filter-tab hover:bg-gray-200"
+              data-filter="overdue"
+            >
+              <i class="mr-1 fas fa-exclamation-triangle"></i>
+              Overdue
+              <span
+                class="ml-1 px-2 py-0.5 text-xs font-bold text-white bg-red-500 rounded-full"
+                >2</span
+              >
+            </button>
+            <button
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg filter-tab hover:bg-gray-200"
+              data-filter="completed"
+            >
+              <i class="mr-1 fas fa-flag-checkered"></i>
+              Completed
+            </button>
+            <button
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg filter-tab hover:bg-gray-200"
+              data-filter="monthly-releases"
+            >
+              <i class="mr-1 fas fa-calendar-check"></i>
+              Monthly Releases
+            </button>
+            <button
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg filter-tab hover:bg-gray-200"
+              data-filter="monthly-collections"
+            >
+              <i class="mr-1 fas fa-hand-holding-usd"></i>
+              Monthly Collections
+            </button>
+          </div>
+        </div>
+
         <div
           class="flex flex-col gap-4 mb-4 md:flex-row md:items-center md:justify-between"
         >
@@ -179,7 +258,7 @@
           </div>
         </div>
 
-        <div class="overflow-x-auto">
+        <div id="loan-table-container" class="overflow-x-auto">
           <table class="min-w-full border border-gray-300">
             <thead class="bg-gray-100">
               <tr class="text-black">
@@ -188,12 +267,16 @@
                 <th class="px-3 py-2 text-left border">Loan Details</th>
                 <th class="px-3 py-2 text-left border">Payment Details</th>
                 <th class="px-3 py-2 text-left border">Unit</th>
+                <th class="px-3 py-2 text-left border">Status</th>
                 <th class="px-3 py-2 text-left border">Action</th>
               </tr>
             </thead>
 
             <tbody>
-              <tr class="font-semibold text-black">
+              <tr
+                class="font-semibold text-black loan-row"
+                data-status="active"
+              >
                 <td class="px-3 py-3 align-top border">1</td>
                 <td class="px-3 py-3 space-y-5 align-top border">
                   <h1>
@@ -235,16 +318,315 @@
                 </td>
                 <td class="px-3 py-3 font-bold align-top border">Blitz 1200</td>
                 <td class="px-3 py-3 align-top border">
+                  <span
+                    class="px-3 py-1 text-sm font-bold text-blue-700 bg-blue-100 rounded-full"
+                  >
+                    Active
+                  </span>
+                </td>
+                <td class="px-3 py-3 align-top border">
                   <button
-                    id="viewPaymentScheduleButton"
-                    class="w-full p-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+                    class="w-full p-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600 viewPaymentScheduleBtn"
                   >
                     View Payment Schedule
                   </button>
                 </td>
               </tr>
+
+              <tr
+                class="font-semibold text-black loan-row"
+                data-status="overdue"
+              >
+                <td class="px-3 py-3 align-top border">2</td>
+                <td class="px-3 py-3 space-y-5 align-top border">
+                  <h1>Name: <span class="font-bold">Santos, Maria C.</span></h1>
+                  <h1>Contact: <span class="font-bold">09123456789</span></h1>
+                  <h1>
+                    Address:
+                    <span class="font-bold">Angeles City, Pampanga</span>
+                  </h1>
+                </td>
+                <td class="px-3 py-3 space-y-5 align-top border">
+                  <h1>Reference no: <span class="font-bold">245865</span></h1>
+                  <h1>Loan Plan: <span class="font-bold">12 months</span></h1>
+                  <h1>Amount: <span class="font-bold">₱35,000.00</span></h1>
+                  <h1>
+                    Down Payment: <span class="font-bold">₱5,000.00</span>
+                  </h1>
+                  <h1>
+                    Total Amount: <span class="font-bold">₱40,000.00</span>
+                  </h1>
+                  <h1>
+                    Monthly Amount: <span class="font-bold">₱2,500.00</span>
+                  </h1>
+                  <h1>
+                    Overdue Amount:
+                    <span class="font-bold text-red-600">₱150.00</span>
+                  </h1>
+                  <h1>
+                    Date Released: <span class="font-bold">March 15, 2025</span>
+                  </h1>
+                </td>
+                <td class="px-3 py-3 space-y-5 align-top border">
+                  <h1>
+                    Next Payment Date:
+                    <span class="font-bold text-red-600">Sept 15, 2025</span>
+                  </h1>
+                  <h1>Amount: <span class="font-bold">₱2,500.00</span></h1>
+                  <h1>
+                    Penalty: <span class="font-bold text-red-600">₱150.00</span>
+                  </h1>
+                  <h1>
+                    Payable Amount:
+                    <span class="font-bold text-red-600">₱2,650.00</span>
+                  </h1>
+                </td>
+                <td class="px-3 py-3 font-bold align-top border">
+                  Fun 350R II
+                </td>
+                <td class="px-3 py-3 align-top border">
+                  <span
+                    class="px-3 py-1 text-sm font-bold text-red-700 bg-red-100 rounded-full"
+                  >
+                    Overdue
+                  </span>
+                </td>
+                <td class="px-3 py-3 align-top border">
+                  <button
+                    class="w-full p-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600 viewPaymentScheduleBtn"
+                  >
+                    View Payment Schedule
+                  </button>
+                </td>
+              </tr>
+
+              <tr
+                class="font-semibold text-black loan-row"
+                data-status="completed"
+              >
+                <td class="px-3 py-3 align-top border">3</td>
+                <td class="px-3 py-3 space-y-5 align-top border">
+                  <h1>Name: <span class="font-bold">Reyes, Pedro A.</span></h1>
+                  <h1>Contact: <span class="font-bold">09987654321</span></h1>
+                  <h1>
+                    Address: <span class="font-bold">Mabalacat, Pampanga</span>
+                  </h1>
+                </td>
+                <td class="px-3 py-3 space-y-5 align-top border">
+                  <h1>Reference no: <span class="font-bold">245863</span></h1>
+                  <h1>Loan Plan: <span class="font-bold">18 months</span></h1>
+                  <h1>Amount: <span class="font-bold">₱60,000.00</span></h1>
+                  <h1>
+                    Down Payment: <span class="font-bold">₱10,000.00</span>
+                  </h1>
+                  <h1>
+                    Total Amount: <span class="font-bold">₱70,000.00</span>
+                  </h1>
+                  <h1>
+                    Monthly Amount: <span class="font-bold">₱3,333.33</span>
+                  </h1>
+                  <h1>Overdue Amount: <span class="font-bold">₱0.00</span></h1>
+                  <h1>
+                    Date Released:
+                    <span class="font-bold">January 10, 2024</span>
+                  </h1>
+                  <h1>
+                    Date Completed:
+                    <span class="font-bold text-green-600">July 10, 2025</span>
+                  </h1>
+                </td>
+                <td class="px-3 py-3 space-y-5 align-top border">
+                  <h1>
+                    Final Payment:
+                    <span class="font-bold">July 10, 2025</span>
+                  </h1>
+                  <h1>Amount: <span class="font-bold">₱3,333.33</span></h1>
+                  <h1>Penalty: <span class="font-bold">₱0.00</span></h1>
+                  <h1>
+                    Total Paid:
+                    <span class="font-bold text-green-600">₱70,000.00</span>
+                  </h1>
+                </td>
+                <td class="px-3 py-3 font-bold align-top border">
+                  Econo 800MP II
+                </td>
+                <td class="px-3 py-3 align-top border">
+                  <span
+                    class="px-3 py-1 text-sm font-bold text-green-700 bg-green-100 rounded-full"
+                  >
+                    Completed
+                  </span>
+                </td>
+                <td class="px-3 py-3 align-top border">
+                  <button
+                    class="w-full p-2 font-bold text-white bg-gray-400 rounded-lg cursor-not-allowed"
+                    disabled
+                  >
+                    Loan Completed
+                  </button>
+                </td>
+              </tr>
             </tbody>
           </table>
+        </div>
+
+        <div id="monthly-releases-container" class="hidden">
+          <div class="mb-4">
+            <label class="mr-2 font-semibold text-gray-700"
+              >Select Month:</label
+            >
+            <select
+              id="monthSelector"
+              class="px-3 py-2 border border-gray-500 rounded"
+            >
+              <option value="2025-01">January 2025</option>
+              <option value="2024-12">December 2024</option>
+              <option value="2024-11">November 2024</option>
+            </select>
+          </div>
+
+          <div class="p-4 mb-4 rounded-lg bg-blue-50">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-lg font-bold text-gray-700">
+                  Total Loan Releases
+                </h3>
+                <p class="text-sm text-gray-600">January 2025</p>
+              </div>
+              <div class="text-right">
+                <p class="text-3xl font-bold text-blue-600">₱125,000.00</p>
+                <p class="text-sm text-gray-600">5 loans released</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full border border-gray-300">
+              <thead class="bg-gray-100">
+                <tr class="text-black">
+                  <th class="px-3 py-2 text-left border">#</th>
+                  <th class="px-3 py-2 text-left border">Reference No.</th>
+                  <th class="px-3 py-2 text-left border">Borrower</th>
+                  <th class="px-3 py-2 text-left border">Loan Amount</th>
+                  <th class="px-3 py-2 text-left border">Date Released</th>
+                  <th class="px-3 py-2 text-left border">Unit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="font-semibold text-black">
+                  <td class="px-3 py-3 border">1</td>
+                  <td class="px-3 py-3 border">245864</td>
+                  <td class="px-3 py-3 border">Dela Cruz, Juan D.</td>
+                  <td class="px-3 py-3 border">₱45,000.00</td>
+                  <td class="px-3 py-3 border">Jan 15, 2025</td>
+                  <td class="px-3 py-3 border">Blitz 1200</td>
+                </tr>
+                <tr class="font-semibold text-black">
+                  <td class="px-3 py-3 border">2</td>
+                  <td class="px-3 py-3 border">245865</td>
+                  <td class="px-3 py-3 border">Santos, Maria C.</td>
+                  <td class="px-3 py-3 border">₱35,000.00</td>
+                  <td class="px-3 py-3 border">Jan 20, 2025</td>
+                  <td class="px-3 py-3 border">Fun 350R II</td>
+                </tr>
+                <tr class="font-semibold text-black">
+                  <td class="px-3 py-3 border">3</td>
+                  <td class="px-3 py-3 border">245866</td>
+                  <td class="px-3 py-3 border">Garcia, Anna B.</td>
+                  <td class="px-3 py-3 border">₱25,000.00</td>
+                  <td class="px-3 py-3 border">Jan 22, 2025</td>
+                  <td class="px-3 py-3 border">Candy 800</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="monthly-collections-container" class="hidden">
+          <div class="mb-4">
+            <label class="mr-2 font-semibold text-gray-700"
+              >Select Month:</label
+            >
+            <select
+              id="collectionsMonthSelector"
+              class="px-3 py-2 border border-gray-500 rounded"
+            >
+              <option value="2025-01">January 2025</option>
+              <option value="2024-12">December 2024</option>
+              <option value="2024-11">November 2024</option>
+            </select>
+          </div>
+
+          <div class="p-4 mb-4 rounded-lg bg-green-50">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-lg font-bold text-gray-700">
+                  Total Collections
+                </h3>
+                <p class="text-sm text-gray-600">January 2025</p>
+              </div>
+              <div class="text-right">
+                <p class="text-3xl font-bold text-green-600">₱89,500.00</p>
+                <p class="text-sm text-gray-600">32 payments received</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full border border-gray-300">
+              <thead class="bg-gray-100">
+                <tr class="text-black">
+                  <th class="px-3 py-2 text-left border">#</th>
+                  <th class="px-3 py-2 text-left border">Reference No.</th>
+                  <th class="px-3 py-2 text-left border">Borrower</th>
+                  <th class="px-3 py-2 text-left border">Payment Date</th>
+                  <th class="px-3 py-2 text-left border">Amount Paid</th>
+                  <th class="px-3 py-2 text-left border">Payment Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="font-semibold text-black">
+                  <td class="px-3 py-3 border">1</td>
+                  <td class="px-3 py-3 border">245864</td>
+                  <td class="px-3 py-3 border">Dela Cruz, Juan D.</td>
+                  <td class="px-3 py-3 border">Jan 10, 2025</td>
+                  <td class="px-3 py-3 border">₱3,000.00</td>
+                  <td class="px-3 py-3 border">
+                    <span
+                      class="px-2 py-1 text-xs font-bold text-blue-700 bg-blue-100 rounded-full"
+                      >Monthly</span
+                    >
+                  </td>
+                </tr>
+                <tr class="font-semibold text-black">
+                  <td class="px-3 py-3 border">2</td>
+                  <td class="px-3 py-3 border">245865</td>
+                  <td class="px-3 py-3 border">Santos, Maria C.</td>
+                  <td class="px-3 py-3 border">Jan 15, 2025</td>
+                  <td class="px-3 py-3 border">₱2,500.00</td>
+                  <td class="px-3 py-3 border">
+                    <span
+                      class="px-2 py-1 text-xs font-bold text-blue-700 bg-blue-100 rounded-full"
+                      >Monthly</span
+                    >
+                  </td>
+                </tr>
+                <tr class="font-semibold text-black">
+                  <td class="px-3 py-3 border">3</td>
+                  <td class="px-3 py-3 border">245863</td>
+                  <td class="px-3 py-3 border">Reyes, Pedro A.</td>
+                  <td class="px-3 py-3 border">Jan 10, 2025</td>
+                  <td class="px-3 py-3 border">₱10,000.00</td>
+                  <td class="px-3 py-3 border">
+                    <span
+                      class="px-2 py-1 text-xs font-bold text-green-700 bg-green-100 rounded-full"
+                      >Down Payment</span
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <p class="mt-3 text-sm font-semibold text-gray-600">
@@ -326,37 +708,6 @@
                 <td class="px-3 py-2 font-medium">Jun 6, 2025</td>
                 <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
               </tr>
-              <tr class="text-gray-800 border-b hover:bg-green-50/50">
-                <td class="px-3 py-2">
-                  <div class="flex items-center gap-2">
-                    <i class="text-green-500 fas fa-check-circle"></i>
-                    <i class="text-gray-400 fas fa-paper-plane"></i>
-                  </div>
-                </td>
-                <td class="px-3 py-2 font-medium">Jul 6, 2025</td>
-                <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
-              </tr>
-              <tr class="text-gray-800 border-b hover:bg-green-50/50">
-                <td class="px-3 py-2">
-                  <div class="flex items-center gap-2">
-                    <i class="text-green-500 fas fa-check-circle"></i>
-                    <i class="text-gray-400 fas fa-paper-plane"></i>
-                  </div>
-                </td>
-                <td class="px-3 py-2 font-medium">Aug 6, 2025</td>
-                <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
-              </tr>
-              <tr class="text-gray-800 border-b hover:bg-green-50/50">
-                <td class="px-3 py-2">
-                  <div class="flex items-center gap-2">
-                    <i class="text-green-500 fas fa-check-circle"></i>
-                    <i class="text-gray-400 fas fa-paper-plane"></i>
-                  </div>
-                </td>
-                <td class="px-3 py-2 font-medium">Sep 6, 2025</td>
-                <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
-              </tr>
-
               <tr class="text-gray-800 border-b hover:bg-gray-50">
                 <td class="px-3 py-2">
                   <div class="flex items-center gap-2">
@@ -370,142 +721,6 @@
                   </div>
                 </td>
                 <td class="px-3 py-2 font-medium">Oct 6, 2025</td>
-                <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
-              </tr>
-
-              <tr class="text-gray-800 border-b hover:bg-gray-50">
-                <td class="px-3 py-2">
-                  <div class="flex items-center gap-2">
-                    <i class="text-gray-500 far fa-circle"></i>
-                    <i
-                      class="text-blue-500 cursor-pointer fas fa-paper-plane send-action-trigger"
-                      data-ref="245864"
-                      data-date="Nov 6, 2025"
-                      data-amount="3,000.00"
-                    ></i>
-                  </div>
-                </td>
-                <td class="px-3 py-2 font-medium">Nov 6, 2025</td>
-                <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
-              </tr>
-              <tr class="text-gray-800 border-b hover:bg-gray-50">
-                <td class="px-3 py-2">
-                  <div class="flex items-center gap-2">
-                    <i class="text-gray-500 far fa-circle"></i>
-                    <i
-                      class="text-blue-500 cursor-pointer fas fa-paper-plane send-action-trigger"
-                      data-ref="245864"
-                      data-date="Dec 6, 2025"
-                      data-amount="3,000.00"
-                    ></i>
-                  </div>
-                </td>
-                <td class="px-3 py-2 font-medium">Dec 6, 2025</td>
-                <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
-              </tr>
-              <tr class="text-gray-800 border-b hover:bg-gray-50">
-                <td class="px-3 py-2">
-                  <div class="flex items-center gap-2">
-                    <i class="text-gray-500 far fa-circle"></i>
-                    <i
-                      class="text-blue-500 cursor-pointer fas fa-paper-plane send-action-trigger"
-                      data-ref="245864"
-                      data-date="Jan 6, 2026"
-                      data-amount="3,000.00"
-                    ></i>
-                  </div>
-                </td>
-                <td class="px-3 py-2 font-medium">Jan 6, 2026</td>
-                <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
-              </tr>
-              <tr class="text-gray-800 border-b hover:bg-gray-50">
-                <td class="px-3 py-2">
-                  <div class="flex items-center gap-2">
-                    <i class="text-gray-500 far fa-circle"></i>
-                    <i
-                      class="text-blue-500 cursor-pointer fas fa-paper-plane send-action-trigger"
-                      data-ref="245864"
-                      data-date="Feb 6, 2026"
-                      data-amount="3,000.00"
-                    ></i>
-                  </div>
-                </td>
-                <td class="px-3 py-2 font-medium">Feb 6, 2026</td>
-                <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
-              </tr>
-              <tr class="text-gray-800 border-b hover:bg-gray-50">
-                <td class="px-3 py-2">
-                  <div class="flex items-center gap-2">
-                    <i class="text-gray-500 far fa-circle"></i>
-                    <i
-                      class="text-blue-500 cursor-pointer fas fa-paper-plane send-action-trigger"
-                      data-ref="245864"
-                      data-date="Mar 6, 2026"
-                      data-amount="3,000.00"
-                    ></i>
-                  </div>
-                </td>
-                <td class="px-3 py-2 font-medium">Mar 6, 2026</td>
-                <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
-              </tr>
-              <tr class="text-gray-800 border-b hover:bg-gray-50">
-                <td class="px-3 py-2">
-                  <div class="flex items-center gap-2">
-                    <i class="text-gray-500 far fa-circle"></i>
-                    <i
-                      class="text-blue-500 cursor-pointer fas fa-paper-plane send-action-trigger"
-                      data-ref="245864"
-                      data-date="Apr 6, 2026"
-                      data-amount="3,000.00"
-                    ></i>
-                  </div>
-                </td>
-                <td class="px-3 py-2 font-medium">Apr 6, 2026</td>
-                <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
-              </tr>
-              <tr class="text-gray-800 border-b hover:bg-gray-50">
-                <td class="px-3 py-2">
-                  <div class="flex items-center gap-2">
-                    <i class="text-gray-500 far fa-circle"></i>
-                    <i
-                      class="text-blue-500 cursor-pointer fas fa-paper-plane send-action-trigger"
-                      data-ref="245864"
-                      data-date="May 6, 2026"
-                      data-amount="3,000.00"
-                    ></i>
-                  </div>
-                </td>
-                <td class="px-3 py-2 font-medium">May 6, 2026</td>
-                <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
-              </tr>
-              <tr class="text-gray-800 border-b hover:bg-gray-50">
-                <td class="px-3 py-2">
-                  <div class="flex items-center gap-2">
-                    <i class="text-gray-500 far fa-circle"></i>
-                    <i
-                      class="text-blue-500 cursor-pointer fas fa-paper-plane send-action-trigger"
-                      data-ref="245864"
-                      data-date="Jun 6, 2026"
-                      data-amount="3,000.00"
-                    ></i>
-                  </div>
-                </td>
-                <td class="px-3 py-2 font-medium">Jun 6, 2026</td>
-                <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
-              </tr>
-              <tr class="text-gray-800 hover:bg-gray-50">
-                <td class="px-3 py-2">
-                  <div class="flex items-center gap-2">
-                    <i class="text-gray-500 far fa-circle"></i>
-                    <i
-                      class="text-blue-500 cursor-pointer fas fa-paper-plane send-action-trigger"
-                      data-ref="245864"
-                      data-date="Jul 6, 2026"
-                      data-amount="3,000.00"
-                    ></i>
-                  </div>
-                </td>
-                <td class="px-3 py-2 font-medium">Jul 6, 2026</td>
                 <td class="px-3 py-2 font-bold text-right">₱ 3,000.00</td>
               </tr>
             </tbody>
@@ -696,7 +911,6 @@
     </div>
 
     <script>
-      // --- Sidebar Logic ---
       const hamburger = document.getElementById("hamburger");
       const sidebar = document.getElementById("sidebar");
       const overlay = document.getElementById("overlay");
@@ -724,7 +938,51 @@
         if (e.key === "Escape") closeSidebarFunc();
       });
 
-      // --- Main Loan Application Modal Logic (ID: loanModal) ---
+      const filterTabs = document.querySelectorAll(".filter-tab");
+      const loanTableContainer = document.getElementById(
+        "loan-table-container"
+      );
+      const monthlyReleasesContainer = document.getElementById(
+        "monthly-releases-container"
+      );
+      const monthlyCollectionsContainer = document.getElementById(
+        "monthly-collections-container"
+      );
+      const loanRows = document.querySelectorAll(".loan-row");
+
+      filterTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          filterTabs.forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+
+          const filter = tab.dataset.filter;
+
+          loanTableContainer.classList.add("hidden");
+          monthlyReleasesContainer.classList.add("hidden");
+          monthlyCollectionsContainer.classList.add("hidden");
+
+          if (filter === "monthly-releases") {
+            monthlyReleasesContainer.classList.remove("hidden");
+          } else if (filter === "monthly-collections") {
+            monthlyCollectionsContainer.classList.remove("hidden");
+          } else {
+            loanTableContainer.classList.remove("hidden");
+
+            loanRows.forEach((row) => {
+              if (filter === "all") {
+                row.style.display = "";
+              } else {
+                if (row.dataset.status === filter) {
+                  row.style.display = "";
+                } else {
+                  row.style.display = "none";
+                }
+              }
+            });
+          }
+        });
+      });
+
       const loanModal = document.getElementById("loanModal");
       const openLoanModalButton = document.getElementById(
         "openLoanModalButton"
@@ -745,9 +1003,8 @@
         }
       });
 
-      // --- Payment Schedule Modal Logic (ID: paymentScheduleModal) ---
-      const viewPaymentScheduleButton = document.getElementById(
-        "viewPaymentScheduleButton"
+      const viewPaymentScheduleButtons = document.querySelectorAll(
+        ".viewPaymentScheduleBtn"
       );
       const paymentScheduleModal = document.getElementById(
         "paymentScheduleModal"
@@ -762,15 +1019,12 @@
 
       function hidePaymentScheduleModal() {
         paymentScheduleModal.classList.add("hidden");
-        actionMenu.classList.add("hidden"); // Also hide the action menu if open
+        actionMenu.classList.add("hidden");
       }
 
-      if (viewPaymentScheduleButton) {
-        viewPaymentScheduleButton.addEventListener(
-          "click",
-          showPaymentScheduleModal
-        );
-      }
+      viewPaymentScheduleButtons.forEach((button) => {
+        button.addEventListener("click", showPaymentScheduleModal);
+      });
 
       if (closePaymentScheduleModalButton) {
         closePaymentScheduleModalButton.addEventListener(
@@ -787,7 +1041,6 @@
         });
       }
 
-      // --- Calculation Pop-up Modal Logic (ID: calculation-modal) ---
       const openCalcModalButton = document.getElementById("open-calc-modal");
       const calcModal = document.getElementById("calculation-modal");
       const closeCalcModalButton = document.getElementById("closeCalcModal");
@@ -825,7 +1078,6 @@
         });
       }
 
-      // --- Success Modal Logic (Now used for ALL successes: Loan & Actions) ---
       const successModal = document.getElementById("success-modal");
       const successOkButton = document.getElementById("success-ok-button");
       const successTitle = document.getElementById("success-title");
@@ -845,12 +1097,10 @@
         successIconContainer.innerHTML = iconHtml;
         successModal.classList.remove("hidden");
 
-        // If it's the Loan Application success, we want the OK button to also close the loanModal
         if (isLoanSuccess) {
           successOkButton.onclick = () => {
             hideSuccessModal();
             loanModal.classList.add("hidden");
-            // Reset the default action for subsequent action messages
             successOkButton.onclick = hideSuccessModal;
           };
         } else {
@@ -862,25 +1112,21 @@
         successModal.classList.add("hidden");
       };
 
-      // Default handler for the OK button
       successOkButton.addEventListener("click", hideSuccessModal);
 
-      // Logic for 'Apply Loan' button to trigger Loan Success Modal
       if (calcApplyButton) {
         calcApplyButton.addEventListener("click", () => {
           hideCalcModal();
-          // Loan Success message setup
           const loanTitle = "Loan Approved!";
           const loanMessage =
             "The loan application was successfully processed and approved.";
           const loanIcon =
             '<svg class="w-16 h-16 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
 
-          showSuccessModal(loanTitle, loanMessage, loanIcon, true); // true indicates Loan Success
+          showSuccessModal(loanTitle, loanMessage, loanIcon, true);
         });
       }
 
-      // --- Action Menu Logic (Updated to use Modal) ---
       const actionMenu = document.getElementById("actionMenu");
       const sendActionTriggers = document.querySelectorAll(
         ".send-action-trigger"
@@ -889,7 +1135,6 @@
 
       let currentSendIcon = null;
 
-      // Function to position and show the action menu
       const showActionMenu = (event) => {
         event.stopPropagation();
         hideActionMenu();
@@ -897,7 +1142,6 @@
         currentSendIcon = event.currentTarget;
         const rect = currentSendIcon.getBoundingClientRect();
 
-        // Position the menu 10px to the right of the icon
         actionMenu.style.top = `${rect.top + window.scrollY}px`;
         actionMenu.style.left = `${
           rect.left + rect.width + 10 + window.scrollX
@@ -914,7 +1158,6 @@
         icon.addEventListener("click", showActionMenu);
       });
 
-      // Event listener for the action buttons inside the menu
       actionButtons.forEach((button) => {
         button.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -926,29 +1169,26 @@
           let title = "";
           let icon = "";
 
-          // Logic based on the selected action
           if (action === "reminder") {
             message = `Reminder message successfully sent for the payment due on ${date}.`;
             title = "Reminder Sent";
-            icon = '<i class="text-green-600 fa-4x fas fa-bell"></i>'; // Bell icon for reminder
+            icon = '<i class="text-green-600 fa-4x fas fa-bell"></i>';
           } else if (action === "overdue") {
             message = `Overdue notice sent for loan #${ref}. The borrower has been notified.`;
             title = "Overdue Notice Sent";
             icon =
-              '<i class="text-red-600 fa-4x fas fa-exclamation-triangle"></i>'; // Warning icon for overdue
+              '<i class="text-red-600 fa-4x fas fa-exclamation-triangle"></i>';
           } else if (action === "sms") {
             message = `SMS message successfully sent to the borrower's contact number.`;
             title = "SMS Sent";
-            icon = '<i class="w-16 h-16 text-blue-600 fas fa-sms"></i>'; // SMS icon for SMS
+            icon = '<i class="w-16 h-16 text-blue-600 fas fa-sms"></i>';
           }
 
           hideActionMenu();
-          // Show the centered modal
           showSuccessModal(title, message, icon);
         });
       });
 
-      // Hide the action menu when clicking anywhere else on the document
       document.addEventListener("click", (e) => {
         if (
           !actionMenu.contains(e.target) &&
@@ -958,7 +1198,6 @@
         }
       });
 
-      // Hide the action menu or success modal on escape key press
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
           hideActionMenu();
