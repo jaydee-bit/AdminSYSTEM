@@ -165,17 +165,19 @@
     <main class="px-6 py-6">
       <h1 class="text-2xl font-bold text-gray-700">Dashboard</h1>
 
-      <!-- ========== DASHBOARD CARDS - ROW 1 ========== -->
-      <div class="grid max-w-6xl gap-6 mt-6 sm:grid-cols-2 md:grid-cols-3">
+      <!-- ========== DASHBOARD CARDS ========== -->
+      <div
+        class="grid gap-6 mt-6 max-w-[1800px] 2xl:max-w-[2200px] mx-auto sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 px-6"
+      >
         <!-- Card: Active Loans -->
         <div
-          class="flex flex-col justify-between p-5 bg-white border-l-4 border-blue-500 shadow rounded-xl"
+          class="flex flex-col justify-between p-5 2xl:p-6 bg-white border-l-4 border-blue-500 shadow rounded-xl"
         >
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-bold text-blue-600">Active Loans</h3>
             <i class="text-2xl text-blue-500 fas fa-book"></i>
           </div>
-          <p class="mt-4 text-3xl font-bold text-gray-700">0</p>
+          <p class="mt-4 text-3xl 2xl:text-4xl font-bold text-gray-700">0</p>
           <a
             href="Adminloanslist.html?tab=active"
             class="flex items-center justify-end mt-4 text-sm font-semibold text-blue-600 hover:underline"
@@ -184,32 +186,15 @@
           </a>
         </div>
 
-        <!-- Card: Payments Today -->
-        <div
-          class="flex flex-col justify-between p-5 bg-white border-l-4 border-green-500 shadow rounded-xl"
-        >
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-bold text-green-600">Payments Today</h3>
-            <i class="text-2xl text-green-500 fas fa-money-bill-wave"></i>
-          </div>
-          <p class="mt-4 text-3xl font-bold text-gray-700">₱ 0.00</p>
-          <a
-            href="Adminpayment.html"
-            class="flex items-center justify-end mt-4 text-sm font-semibold text-green-600 hover:underline"
-          >
-            View Payment List <i class="ml-2 fas fa-arrow-right"></i>
-          </a>
-        </div>
-
         <!-- Card: Borrowers -->
         <div
-          class="flex flex-col justify-between p-5 bg-white border-l-4 shadow rounded-xl border-cyan-400"
+          class="flex flex-col justify-between p-5 2xl:p-6 bg-white border-l-4 shadow rounded-xl border-cyan-400"
         >
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-bold text-cyan-500">Borrowers</h3>
             <i class="text-2xl fas fa-users text-cyan-400"></i>
           </div>
-          <p class="mt-4 text-3xl font-bold text-gray-700">0</p>
+          <p class="mt-4 text-3xl 2xl:text-4xl font-bold text-gray-700">0</p>
           <a
             href="Adminborrower.html"
             class="flex items-center justify-end mt-4 text-sm font-semibold text-cyan-500 hover:underline"
@@ -217,20 +202,19 @@
             View Borrower List <i class="ml-2 fas fa-arrow-right"></i>
           </a>
         </div>
-      </div>
 
-      <!-- ========== DASHBOARD CARDS - ROW 2 ========== -->
-      <div class="grid max-w-6xl gap-6 mt-6 sm:grid-cols-2 md:grid-cols-3">
         <!-- Card: Monthly Releases -->
         <div
-          class="flex flex-col justify-between p-5 bg-white border-l-4 border-purple-500 shadow rounded-xl"
+          class="flex flex-col justify-between p-5 2xl:p-6 bg-white border-l-4 border-purple-500 shadow rounded-xl"
         >
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-bold text-purple-600">Monthly Releases</h3>
             <i class="text-2xl text-purple-500 fas fa-calendar-check"></i>
           </div>
-          <p class="mt-4 text-3xl font-bold text-gray-700">₱ 0.00</p>
-          <p class="mt-1 text-xs text-gray-500">January 2026</p>
+          <p class="mt-4 text-3xl 2xl:text-4xl font-bold text-gray-700">
+            ₱ 0.00
+          </p>
+          <p class="mt-1 text-xs font-semibold text-gray-500">January 2026</p>
           <a
             href="Adminloanslist.html#monthly-releases"
             class="flex items-center justify-end mt-4 text-sm font-semibold text-purple-600 hover:underline"
@@ -241,14 +225,16 @@
 
         <!-- Card: Monthly Collections -->
         <div
-          class="flex flex-col justify-between p-5 bg-white border-l-4 border-teal-500 shadow rounded-xl"
+          class="flex flex-col justify-between p-5 2xl:p-6 bg-white border-l-4 border-teal-500 shadow rounded-xl"
         >
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-bold text-teal-600">Monthly Collections</h3>
             <i class="text-2xl text-teal-500 fas fa-hand-holding-usd"></i>
           </div>
-          <p class="mt-4 text-3xl font-bold text-gray-700">₱ 0.00</p>
-          <p class="mt-1 text-xs text-gray-500">January 2026</p>
+          <p class="mt-4 text-3xl 2xl:text-4xl font-bold text-gray-700">
+            ₱ 0.00
+          </p>
+          <p class="mt-1 text-xs font-semibold text-gray-500">January 2026</p>
           <a
             href="Adminloanslist.html#monthly-collections"
             class="flex items-center justify-end mt-4 text-sm font-semibold text-teal-600 hover:underline"
@@ -259,14 +245,16 @@
 
         <!-- Card: Overdue Loans -->
         <div
-          class="flex flex-col justify-between p-5 bg-white border-l-4 border-red-500 shadow rounded-xl"
+          class="flex flex-col justify-between p-5 2xl:p-6 bg-white border-l-4 border-red-500 shadow rounded-xl"
         >
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-bold text-red-600">Overdue Loans</h3>
             <i class="text-2xl text-red-500 fas fa-exclamation-triangle"></i>
           </div>
-          <p class="mt-4 text-3xl font-bold text-gray-700">0</p>
-          <p class="mt-1 text-xs text-gray-500">Requires attention</p>
+          <p class="mt-4 text-3xl 2xl:text-4xl font-bold text-gray-700">0</p>
+          <p class="mt-1 text-xs font-semibold text-gray-500">
+            Requires attention
+          </p>
           <a
             href="Adminloanslist.html#overdue"
             class="flex items-center justify-end mt-4 text-sm font-semibold text-red-600 hover:underline"
@@ -274,20 +262,18 @@
             View Overdue <i class="ml-2 fas fa-arrow-right"></i>
           </a>
         </div>
-      </div>
-
-      <!-- ========== DASHBOARD CARDS - ROW 3 (NEW) ========== -->
-      <div class="grid max-w-6xl gap-6 mt-6 sm:grid-cols-2 md:grid-cols-3">
         <!-- Card: Completed Loans (NEW) -->
         <div
-          class="flex flex-col justify-between p-5 bg-white border-l-4 shadow border-emerald-500 rounded-xl"
+          class="flex flex-col justify-between p-5 2xl:p-6 bg-white border-l-4 shadow border-emerald-500 rounded-xl"
         >
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-bold text-emerald-600">Completed Loans</h3>
             <i class="text-2xl text-emerald-500 fas fa-check-circle"></i>
           </div>
-          <p class="mt-4 text-3xl font-bold text-gray-700">1</p>
-          <p class="mt-1 text-xs text-gray-500">Total: ₱70,000.00</p>
+          <p class="mt-4 text-3xl 2xl:text-4xl font-bold text-gray-700">1</p>
+          <p class="mt-1 text-xs font-semibold text-gray-500">
+            Total: ₱70,000.00
+          </p>
           <a
             href="Adminloanslist.html#completed"
             class="flex items-center justify-end mt-4 text-sm font-semibold text-emerald-600 hover:underline"
