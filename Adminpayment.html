@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -25,6 +25,60 @@
       }
       .sidebar-closed {
         transform: translateX(-100%);
+      }
+      
+      /* Modern Table Styling */
+      .modern-table {
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+      
+      .modern-table thead th {
+        background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        color: #475569;
+        padding: 1rem 1.5rem;
+        border-bottom: 2px solid #e2e8f0;
+      }
+      
+      .modern-table tbody tr {
+        transition: background-color 0.2s ease;
+        border-bottom: 1px solid #f1f5f9;
+      }
+      
+      .modern-table tbody tr:hover {
+        background-color: #f8fafc;
+      }
+      
+      .modern-table tbody td {
+        padding: 1.25rem 1.5rem;
+        color: #334155;
+        font-size: 0.9rem;
+      }
+      
+      .modern-table tbody tr:last-child {
+        border-bottom: none;
+      }
+      
+      .badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+      
+      .badge-success {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      
+      .badge-info {
+        background-color: #dbeafe;
+        color: #1e40af;
       }
     </style>
   </head>
@@ -113,7 +167,10 @@
         </button>
         <img
           src="images/logo.png"
-          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+          onerror="
+            this.style.display = 'none';
+            this.nextElementSibling.style.display = 'block';
+          "
           class="h-8 ml-3"
         />
         <span class="hidden ml-2 text-xl font-bold">ECODRIVE</span>
@@ -165,40 +222,36 @@
         </div>
 
         <div class="overflow-x-auto">
-          <table class="min-w-full border border-gray-300">
-            <thead class="bg-gray-100">
-              <tr class="text-black">
-                <th class="px-3 py-2 text-left border">#</th>
-                <th class="px-3 py-2 text-left border">Loan Reference No.</th>
-                <th class="px-3 py-2 text-left border">Date</th>
-                <th class="px-3 py-2 text-left border">Payer</th>
-                <th class="px-3 py-2 text-left border">Amount</th>
-                <th class="px-3 py-2 text-left border">Penalty</th>
+          <table class="min-w-full modern-table">
+            <thead>
+              <tr>
+                <th class="text-left">#</th>
+                <th class="text-left">Loan Reference No.</th>
+                <th class="text-left">Date</th>
+                <th class="text-left">Payer</th>
+                <th class="text-left">Amount</th>
+                <th class="text-left">Penalty</th>
               </tr>
             </thead>
 
             <tbody>
-              <tr class="font-semibold text-black">
-                <td class="px-3 py-3 align-top border">1</td>
-                <td class="px-3 py-3 font-bold align-top border">245864</td>
-                <td class="px-3 py-3 font-bold align-top border">
-                  Nov 10, 2025
-                </td>
-                <td class="px-3 py-3 font-bold align-top border">
-                  Dela Cruz, Juan D.
-                </td>
-                <td class="px-3 py-3 font-bold align-top border">₱3,000.00</td>
-                <td class="px-3 py-3 font-bold align-top border">0</td>
+              <tr>
+                <td class="font-medium text-gray-500">1</td>
+                <td class="font-medium text-gray-500"> 245864</td>
+                <td class="font-semibold text-gray-600">Nov 10, 2025</td>
+                <td class="font-medium text-gray-800">Dela Cruz, Juan D.</td>
+                <td class="font-semibold text-green-600">₱3,000.00</td>
+                <td class="font-medium text-gray-500">0</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <p class="mt-3 text-sm font-semibold text-gray-600">
-          Showing 0 to 0 of 0 entries
-        </p>
+        <div class="flex items-center justify-between mt-3">
+          <p class="text-sm font-semibold text-gray-600">
+            Showing 0 to 0 of 0 entries
+          </p>
 
-        <div class="flex justify-end mt-3">
           <div class="flex items-center gap-1">
             <button
               class="px-3 py-1 text-black bg-gray-100 border rounded hover:bg-gray-300"
@@ -240,7 +293,7 @@
               <input
                 type="text"
                 class="w-full px-3 py-2 mt-1 text-black border border-black rounded"
-                oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
               />
             </div>
 
@@ -261,7 +314,7 @@
               <input
                 type="text"
                 class="w-full px-3 py-2 mt-1 text-black border rounded"
-                oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
               />
             </div>
 
@@ -272,7 +325,7 @@
               <input
                 type="text"
                 class="w-full px-3 py-2 mt-1 text-black border rounded"
-                oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
               />
             </div>
 
@@ -281,7 +334,7 @@
               <input
                 type="text"
                 class="w-full px-3 py-2 mt-1 text-black border rounded"
-                oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
               />
             </div>
           </div>
@@ -367,19 +420,19 @@
       /* PAYMENT MODAL */
       const paymentModal = document.getElementById("paymentModal");
       const openpaymentModalButton = document.getElementById(
-        "openpaymentModalButton"
+        "openpaymentModalButton",
       );
       const closeModalButton = document.getElementById("closeModal");
       const cancelForm = document.getElementById("cancelForm");
 
       openpaymentModalButton.addEventListener("click", () =>
-        paymentModal.classList.remove("hidden")
+        paymentModal.classList.remove("hidden"),
       );
       closeModalButton.addEventListener("click", () =>
-        paymentModal.classList.add("hidden")
+        paymentModal.classList.add("hidden"),
       );
       cancelForm.addEventListener("click", () =>
-        paymentModal.classList.add("hidden")
+        paymentModal.classList.add("hidden"),
       );
 
       /* SUCCESS MODAL */
@@ -388,7 +441,7 @@
       const successTitle = document.getElementById("success-title");
       const successMessage = document.getElementById("success-message");
       const successIconContainer = document.getElementById(
-        "success-icon-container"
+        "success-icon-container",
       );
 
       const showSuccessModal = (title, msg, iconHtml) => {
@@ -399,7 +452,7 @@
       };
 
       successOkButton.addEventListener("click", () =>
-        successModal.classList.add("hidden")
+        successModal.classList.add("hidden"),
       );
 
       /* SAVE BUTTON → SHOW SUCCESS MODAL */
@@ -409,7 +462,7 @@
           showSuccessModal(
             "Payment Saved!",
             "The payment has been successfully recorded.",
-            `<svg class="w-16 h-16 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`
+            `<svg class="w-16 h-16 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
           );
           paymentModal.classList.add("hidden");
         });

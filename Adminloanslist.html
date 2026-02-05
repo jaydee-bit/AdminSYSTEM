@@ -46,6 +46,50 @@
         color: white;
         font-weight: 600;
       }
+
+      /* Modern Table Styling */
+      .modern-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        table-layout: fixed;
+        width: 100%;
+      }
+      
+      /* Column width control */
+      .modern-table thead th:first-child,
+      .modern-table tbody td:first-child {
+        width: 60px;
+      }
+      
+      .modern-table thead th {
+        background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        color: #475569;
+        padding: 1rem 1.5rem;
+        border-bottom: 2px solid #e2e8f0;
+      }
+      
+      .modern-table tbody tr {
+        transition: background-color 0.2s ease;
+        border-bottom: 4px solid #64748b;
+      }
+      
+      .modern-table tbody tr:hover {
+        background-color: #f8fafc;
+      }
+      
+      .modern-table tbody td {
+        padding: 1.25rem 1.5rem;
+        color: #334155;
+        font-size: 0.9rem;
+      }
+      
+      .modern-table tbody tr:last-child {
+        border-bottom: none;
+      }
     </style>
   </head>
 
@@ -308,17 +352,17 @@
 
         <!-- ========== LOAN TABLE ========== -->
         <div id="loan-table-container" class="overflow-x-auto">
-          <table class="min-w-full border border-gray-300">
+          <table class="min-w-full modern-table">
             <!-- Table Header -->
-            <thead class="bg-gray-100">
-              <tr class="text-black">
-                <th class="px-3 py-2 text-left border">#</th>
-                <th class="px-3 py-2 text-left border">Borrower</th>
-                <th class="px-3 py-2 text-left border">Loan Details</th>
-                <th class="px-3 py-2 text-left border">Payment Details</th>
-                <th class="px-3 py-2 text-left border">Unit</th>
-                <th class="px-3 py-2 text-left border">Status</th>
-                <th class="px-3 py-2 text-left border">Action</th>
+            <thead>
+              <tr>
+                <th class="text-left">#</th>
+                <th class="text-left">Borrower</th>
+                <th class="text-left">Loan Details</th>
+                <th class="text-left">Payment Details</th>
+                <th class="text-left">Unit</th>
+                <th class="text-left">Status</th>
+                <th class="text-left">Action</th>
               </tr>
             </thead>
 
@@ -329,10 +373,10 @@
                 data-status="active"
               >
                 <!-- Row Number -->
-                <td class="px-3 py-3 align-top border">1</td>
+                <td class="align-top">1</td>
 
                 <!-- Borrower Information -->
-                <td class="px-3 py-3 space-y-5 align-top border">
+                <td class="space-y-5 align-top">
                   <h1>
                     Name: <span class="font-bold">Dela Cruz, Juan D.</span>
                   </h1>
@@ -343,7 +387,7 @@
                 </td>
 
                 <!-- Loan Details -->
-                <td class="px-3 py-3 space-y-5 align-top border">
+                <td class="space-y-5 align-top">
                   <h1>Reference no: <span class="font-bold">245864</span></h1>
                   <h1>Loan Plan: <span class="font-bold">15 months</span></h1>
                   <h1>Amount: <span class="font-bold">₱45,000.00</span></h1>
@@ -363,7 +407,7 @@
                 </td>
 
                 <!-- Payment Details -->
-                <td class="px-3 py-3 space-y-5 align-top border">
+                <td class="space-y-5 align-top">
                   <h1>
                     Next Payment Date:
                     <span class="font-bold">Oct 6, 2025</span>
@@ -376,10 +420,10 @@
                 </td>
 
                 <!-- Unit Model -->
-                <td class="px-3 py-3 font-bold align-top border">Blitz 1200</td>
+                <td class="font-bold align-top">Blitz 1200</td>
 
                 <!-- Status Badge -->
-                <td class="px-3 py-3 align-top border">
+                <td class="align-top">
                   <span
                     class="px-3 py-1 text-sm font-bold text-blue-700 bg-blue-100 rounded-full"
                   >
@@ -388,7 +432,7 @@
                 </td>
 
                 <!-- Action Button -->
-                <td class="px-3 py-3 align-top border">
+                <td class="align-top">
                   <button
                     class="w-full p-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600 viewPaymentScheduleBtn"
                   >
@@ -403,10 +447,10 @@
                 data-status="overdue"
               >
                 <!-- Row Number -->
-                <td class="px-3 py-3 align-top border">2</td>
+                <td class="align-top">2</td>
 
                 <!-- Borrower Information -->
-                <td class="px-3 py-3 space-y-5 align-top border">
+                <td class="space-y-5 align-top">
                   <h1>Name: <span class="font-bold">Santos, Maria C.</span></h1>
                   <h1>Contact: <span class="font-bold">09123456789</span></h1>
                   <h1>
@@ -416,7 +460,7 @@
                 </td>
 
                 <!-- Loan Details -->
-                <td class="px-3 py-3 space-y-5 align-top border">
+                <td class="space-y-5 align-top">
                   <h1>Reference no: <span class="font-bold">245865</span></h1>
                   <h1>Loan Plan: <span class="font-bold">12 months</span></h1>
                   <h1>Amount: <span class="font-bold">₱35,000.00</span></h1>
@@ -439,7 +483,7 @@
                 </td>
 
                 <!-- Payment Details -->
-                <td class="px-3 py-3 space-y-5 align-top border">
+                <td class="space-y-5 align-top">
                   <h1>
                     Next Payment Date:
                     <span class="font-bold text-red-600">Sept 15, 2025</span>
@@ -455,12 +499,12 @@
                 </td>
 
                 <!-- Unit Model -->
-                <td class="px-3 py-3 font-bold align-top border">
+                <td class="font-bold align-top">
                   Fun 350R II
                 </td>
 
                 <!-- Status Badge -->
-                <td class="px-3 py-3 align-top border">
+                <td class="align-top">
                   <span
                     class="px-3 py-1 text-sm font-bold text-red-700 bg-red-100 rounded-full"
                   >
@@ -469,7 +513,7 @@
                 </td>
 
                 <!-- Action Button -->
-                <td class="px-3 py-3 align-top border">
+                <td class="align-top">
                   <button
                     class="w-full p-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600 viewPaymentScheduleBtn"
                   >
@@ -484,10 +528,10 @@
                 data-status="completed"
               >
                 <!-- Row Number -->
-                <td class="px-3 py-3 align-top border">3</td>
+                <td class="align-top">3</td>
 
                 <!-- Borrower Information -->
-                <td class="px-3 py-3 space-y-5 align-top border">
+                <td class="space-y-5 align-top">
                   <h1>Name: <span class="font-bold">Reyes, Pedro A.</span></h1>
                   <h1>Contact: <span class="font-bold">09987654321</span></h1>
                   <h1>
@@ -496,7 +540,7 @@
                 </td>
 
                 <!-- Loan Details -->
-                <td class="px-3 py-3 space-y-5 align-top border">
+                <td class="space-y-5 align-top">
                   <h1>Reference no: <span class="font-bold">245863</span></h1>
                   <h1>Loan Plan: <span class="font-bold">18 months</span></h1>
                   <h1>Amount: <span class="font-bold">₱60,000.00</span></h1>
@@ -521,7 +565,7 @@
                 </td>
 
                 <!-- Payment Details -->
-                <td class="px-3 py-3 space-y-5 align-top border">
+                <td class="space-y-5 align-top">
                   <h1>
                     Final Payment:
                     <span class="font-bold">July 10, 2025</span>
@@ -535,12 +579,12 @@
                 </td>
 
                 <!-- Unit Model -->
-                <td class="px-3 py-3 font-bold align-top border">
+                <td class="font-bold align-top">
                   Econo 800MP II
                 </td>
 
                 <!-- Status Badge -->
-                <td class="px-3 py-3 align-top border">
+                <td class="align-top">
                   <span
                     class="px-3 py-1 text-sm font-bold text-green-700 bg-green-100 rounded-full"
                   >
@@ -549,7 +593,7 @@
                 </td>
 
                 <!-- Action Button (Disabled) -->
-                <td class="px-3 py-3 align-top border">
+                <td class="align-top">
                   <button
                     class="w-full p-2 font-bold text-white bg-gray-400 rounded-lg cursor-not-allowed"
                     disabled
@@ -571,7 +615,7 @@
             >
             <select
               id="monthSelector"
-              class="px-3 py-2 border border-gray-500 rounded"
+              class="px-3 py-2 text-gray-800 border border-gray-500 rounded"
             >
               <option value="2025-01">January 2025</option>
               <option value="2024-12">December 2024</option>
@@ -597,46 +641,46 @@
 
           <!-- Monthly Releases Table -->
           <div class="overflow-x-auto">
-            <table class="min-w-full border border-gray-300">
-              <thead class="bg-gray-100">
-                <tr class="text-black">
-                  <th class="px-3 py-2 text-left border">#</th>
-                  <th class="px-3 py-2 text-left border">Reference No.</th>
-                  <th class="px-3 py-2 text-left border">Borrower</th>
-                  <th class="px-3 py-2 text-left border">Loan Amount</th>
-                  <th class="px-3 py-2 text-left border">Date Released</th>
-                  <th class="px-3 py-2 text-left border">Unit</th>
+            <table class="min-w-full modern-table">
+              <thead>
+                <tr>
+                  <th class="text-left">#</th>
+                  <th class="text-left">Reference No.</th>
+                  <th class="text-left">Borrower</th>
+                  <th class="text-left">Loan Amount</th>
+                  <th class="text-left">Date Released</th>
+                  <th class="text-left">Unit</th>
                 </tr>
               </thead>
               <tbody>
                 <!-- Sample Release 1 -->
                 <tr class="font-semibold text-black">
-                  <td class="px-3 py-3 border">1</td>
-                  <td class="px-3 py-3 border">245864</td>
-                  <td class="px-3 py-3 border">Dela Cruz, Juan D.</td>
-                  <td class="px-3 py-3 border">₱45,000.00</td>
-                  <td class="px-3 py-3 border">Jan 15, 2025</td>
-                  <td class="px-3 py-3 border">Blitz 1200</td>
+                  <td>1</td>
+                  <td>245864</td>
+                  <td>Dela Cruz, Juan D.</td>
+                  <td>₱45,000.00</td>
+                  <td>Jan 15, 2025</td>
+                  <td>Blitz 1200</td>
                 </tr>
 
                 <!-- Sample Release 2 -->
                 <tr class="font-semibold text-black">
-                  <td class="px-3 py-3 border">2</td>
-                  <td class="px-3 py-3 border">245865</td>
-                  <td class="px-3 py-3 border">Santos, Maria C.</td>
-                  <td class="px-3 py-3 border">₱35,000.00</td>
-                  <td class="px-3 py-3 border">Jan 20, 2025</td>
-                  <td class="px-3 py-3 border">Fun 350R II</td>
+                  <td>2</td>
+                  <td>245865</td>
+                  <td>Santos, Maria C.</td>
+                  <td>₱35,000.00</td>
+                  <td>Jan 20, 2025</td>
+                  <td>Fun 350R II</td>
                 </tr>
 
                 <!-- Sample Release 3 -->
                 <tr class="font-semibold text-black">
-                  <td class="px-3 py-3 border">3</td>
-                  <td class="px-3 py-3 border">245866</td>
-                  <td class="px-3 py-3 border">Garcia, Anna B.</td>
-                  <td class="px-3 py-3 border">₱25,000.00</td>
-                  <td class="px-3 py-3 border">Jan 22, 2025</td>
-                  <td class="px-3 py-3 border">Candy 800</td>
+                  <td>3</td>
+                  <td>245866</td>
+                  <td>Garcia, Anna B.</td>
+                  <td>₱25,000.00</td>
+                  <td>Jan 22, 2025</td>
+                  <td>Candy 800</td>
                 </tr>
               </tbody>
             </table>
@@ -652,7 +696,7 @@
             >
             <select
               id="collectionsMonthSelector"
-              class="px-3 py-2 border border-gray-500 rounded"
+              class="px-3 py-2 text-gray-800 border border-gray-500 rounded"
             >
               <option value="2025-01">January 2025</option>
               <option value="2024-12">December 2024</option>
@@ -678,26 +722,26 @@
 
           <!-- Monthly Collections Table -->
           <div class="overflow-x-auto">
-            <table class="min-w-full border border-gray-300">
-              <thead class="bg-gray-100">
-                <tr class="text-black">
-                  <th class="px-3 py-2 text-left border">#</th>
-                  <th class="px-3 py-2 text-left border">Reference No.</th>
-                  <th class="px-3 py-2 text-left border">Borrower</th>
-                  <th class="px-3 py-2 text-left border">Payment Date</th>
-                  <th class="px-3 py-2 text-left border">Amount Paid</th>
-                  <th class="px-3 py-2 text-left border">Payment Type</th>
+            <table class="min-w-full modern-table">
+              <thead>
+                <tr>
+                  <th class="text-left">#</th>
+                  <th class="text-left">Reference No.</th>
+                  <th class="text-left">Borrower</th>
+                  <th class="text-left">Payment Date</th>
+                  <th class="text-left">Amount Paid</th>
+                  <th class="text-left">Payment Type</th>
                 </tr>
               </thead>
               <tbody>
                 <!-- Sample Collection 1 -->
                 <tr class="font-semibold text-black">
-                  <td class="px-3 py-3 border">1</td>
-                  <td class="px-3 py-3 border">245864</td>
-                  <td class="px-3 py-3 border">Dela Cruz, Juan D.</td>
-                  <td class="px-3 py-3 border">Jan 10, 2025</td>
-                  <td class="px-3 py-3 border">₱3,000.00</td>
-                  <td class="px-3 py-3 border">
+                  <td>1</td>
+                  <td>245864</td>
+                  <td>Dela Cruz, Juan D.</td>
+                  <td>Jan 10, 2025</td>
+                  <td>₱3,000.00</td>
+                  <td>
                     <span
                       class="px-2 py-1 text-xs font-bold text-blue-700 bg-blue-100 rounded-full"
                       >Monthly</span
@@ -707,12 +751,12 @@
 
                 <!-- Sample Collection 2 -->
                 <tr class="font-semibold text-black">
-                  <td class="px-3 py-3 border">2</td>
-                  <td class="px-3 py-3 border">245865</td>
-                  <td class="px-3 py-3 border">Santos, Maria C.</td>
-                  <td class="px-3 py-3 border">Jan 15, 2025</td>
-                  <td class="px-3 py-3 border">₱2,500.00</td>
-                  <td class="px-3 py-3 border">
+                  <td>2</td>
+                  <td>245865</td>
+                  <td>Santos, Maria C.</td>
+                  <td>Jan 15, 2025</td>
+                  <td>₱2,500.00</td>
+                  <td>
                     <span
                       class="px-2 py-1 text-xs font-bold text-blue-700 bg-blue-100 rounded-full"
                       >Monthly</span
@@ -722,12 +766,12 @@
 
                 <!-- Sample Collection 3 -->
                 <tr class="font-semibold text-black">
-                  <td class="px-3 py-3 border">3</td>
-                  <td class="px-3 py-3 border">245863</td>
-                  <td class="px-3 py-3 border">Reyes, Pedro A.</td>
-                  <td class="px-3 py-3 border">Jan 10, 2025</td>
-                  <td class="px-3 py-3 border">₱10,000.00</td>
-                  <td class="px-3 py-3 border">
+                  <td>3</td>
+                  <td>245863</td>
+                  <td>Reyes, Pedro A.</td>
+                  <td>Jan 10, 2025</td>
+                  <td>₱10,000.00</td>
+                  <td>
                     <span
                       class="px-2 py-1 text-xs font-bold text-green-700 bg-green-100 rounded-full"
                       >Down Payment</span
@@ -740,12 +784,12 @@
         </div>
 
         <!-- Table Footer Info -->
-        <p class="mt-3 text-sm font-semibold text-gray-600">
-          Showing 0 to 0 of 0 entries
-        </p>
+        <div class="flex items-center justify-between mt-3">
+          <p class="text-sm font-semibold text-gray-600">
+            Showing 0 to 0 of 0 entries
+          </p>
 
-        <!-- ========== PAGINATION ========== -->
-        <div class="flex justify-end mt-3">
+          <!-- ========== PAGINATION ========== -->
           <div class="flex items-center gap-1">
             <button
               class="px-3 py-1 text-black bg-gray-100 border rounded hover:bg-gray-300"
